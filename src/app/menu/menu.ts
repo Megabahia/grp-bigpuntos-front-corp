@@ -163,5 +163,153 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+  {
+    id: 'superMonedas',
+    title: 'Super Monedas',
+    role: [Role.SuperMonedas],
+    // translate: 'MENU.PAGES.SECTION',
+    type: 'collapsible',
+    icon: 'dollar-sign',
+    children: [
+      {
+        id: 'cobrarConSuperMonedas',
+        title: 'Cobrar con Super Monedas',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'users',
+        url: '/supermonedas/inicio'
+      },
+      {
+        id: 'clientes',
+        title: 'Clientes',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'users',
+        url: 'personas/supermonedas/mis-monedas'
+      },
+      {
+        id: 'productos',
+        title: 'Productos',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'shopping-bag',
+        url: 'personas/supermonedas/mis-monedas'
+      },
+      {
+        id: 'cargarMonedas',
+        title: 'Cargar Monedas',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'dollar-sign',
+        url: 'personas/supermonedas/mis-monedas'
+      },
+      {
+        id: 'cargarPremios',
+        title: 'Cargar Premios',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'package',
+        url: 'personas/supermonedas/mis-monedas'
+      }, {
+        id: 'mdoMotorOfertas',
+        title: 'MDO Motor de Ofertas',
+        // translate: 'MENU.PAGES.SECTION',
+        type: 'collapsible',
+        icon: 'file-text',
+        children: [
+          {
+            id: 'parametrizacion',
+            title: 'Parametrización',
+            // translate: 'MENU.APPS.EMAIL',
+            type: 'item',
+            icon: 'circle',
+            url: 'personas/supermonedas/mis-monedas'
+          },
+          {
+            id: 'prediccionesCrosseling',
+            title: 'Predicciones para crosseling',
+            // translate: 'MENU.APPS.EMAIL',
+            type: 'item',
+            icon: 'circle',
+            url: 'personas/supermonedas/mis-monedas'
+          },
+          {
+            id: 'prediccionesRefil',
+            title: 'Predicciones para refil',
+            // translate: 'MENU.APPS.EMAIL',
+            type: 'item',
+            icon: 'circle',
+            url: 'personas/supermonedas/mis-monedas'
+          },
+          {
+            id: 'prediccionesNuevosProductos',
+            title: 'Predicciones para nuevos productos',
+            // translate: 'MENU.APPS.EMAIL',
+            type: 'item',
+            icon: 'circle',
+            url: 'personas/supermonedas/mis-monedas'
+          },
+          {
+            id: 'generarOfertaCliente',
+            title: 'Generar oferta para cliente',
+            // translate: 'MENU.APPS.EMAIL',
+            type: 'item',
+            icon: 'circle',
+            url: 'personas/supermonedas/mis-monedas'
+          }]
+      }
+    ]
+  },
+  {
+    id: 'comercial',
+    title: 'Comercial',
+    // translate: 'MENU.PAGES.SECTION',
+    type: 'collapsible',
+    icon: 'shopping-bag',
+    children: [
+      {
+        id: 'notasPedido',
+        title: 'Notas de pedido',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'dollar-sign',
+        url: 'personas/supermonedas/mis-monedas'
+      },
+      {
+        id: 'solicitudesCredito',
+        title: 'Solicitudes de crédito',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'dollar-sign',
+        url: 'personas/supermonedas/mis-monedas'
+      },
+      {
+        id: 'creditosPreAprobados',
+        title: 'Créditos pre aprobados',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'credit-card',
+        url: 'personas/supermonedas/mis-monedas'
+      },
+    ]
+  },
+  {
+    id: 'cobrosRecurrentes',
+    title: 'Cobros Recurrentes',
+    // translate: 'MENU.HOME',
+    // role: [Role.SuperMonedas],
+    type: 'item',
+    icon: 'dollar-sign',
+    url: 'personas/supermonedas/mis-monedas',
 
+  },
+  {
+    id: 'recaudaciones',
+    title: 'Recaudaciones',
+    // translate: 'MENU.HOME',
+    // role: [Role.SuperMonedas],
+    type: 'item',
+    icon: 'dollar-sign',
+    url: 'personas/supermonedas/mis-monedas',
+  }
 ]

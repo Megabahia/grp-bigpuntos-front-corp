@@ -36,37 +36,37 @@ export class AuthGuard implements CanActivate {
       });
 
 
-      if (route.data.activacion) {
-        if (route.data.activacion.indexOf(Number(currentUser.estado)) != -1) {
-          activacion = true;
-        }
-      }
-      switch (Number(currentUser.estado)) {
-        case 1: {
-          if (!activacion) {
-            this._router.navigate(['/personas/bienvenido']);
-          }
-          return true;
-        }
-        case 2: {
-          if (!activacion) {
-            this._router.navigate(['/personas/completarPerfil']);
-          }
-          return true;
-        }
-        case 3: {
-          if (!activacion) {
-            this._router.navigate(['/personas/completarPerfil']);
-          }
-          return true;
-        }
-        case 4: {
-          if (!activacion) {
-            this._router.navigate(['/personas/felicidadesRegistro']);
-          }
-          return true;
-        }
-      }
+      // if (route.data.activacion) {
+      //   if (route.data.activacion.indexOf(Number(currentUser.estado)) != -1) {
+      //     activacion = true;
+      //   }
+      // }
+      // switch (Number(currentUser.estado)) {
+      //   case 1: {
+      //     if (!activacion) {
+      //       this._router.navigate(['/personas/bienvenido']);
+      //     }
+      //     return true;
+      //   }
+      //   case 2: {
+      //     if (!activacion) {
+      //       this._router.navigate(['/personas/completarPerfil']);
+      //     }
+      //     return true;
+      //   }
+      //   case 3: {
+      //     if (!activacion) {
+      //       this._router.navigate(['/personas/completarPerfil']);
+      //     }
+      //     return true;
+      //   }
+      //   case 4: {
+      //     if (!activacion) {
+      //       this._router.navigate(['/personas/felicidadesRegistro']);
+      //     }
+      //     return true;
+      //   }
+      // }
 
       if (route.data.roles && !rolEncontrado) {
         // role not authorised so redirect to not-authorized page
