@@ -15,9 +15,8 @@ import { CobrarService } from './cobrar.service';
   host: { class: 'ecommerce-application' }
 })
 export class CobrarComponent implements OnInit {
-  @ViewChild('DetalleProducto') DetalleProducto;
-  @ViewChild('CanjearProducto') CanjearProducto;
-  @ViewChild('confirmarPreautorizacionMdl') confirmarPreautorizacionMdl;
+  @ViewChild('preautorizacionCobroMdl') preautorizacionCobroMdl;
+  @ViewChild('confirmacionCobroMdl') confirmacionCobroMdl;
   @ViewChild('mensajeModal') mensajeModal;
   @ViewChild(NgbPagination) paginator: NgbPagination;
 
@@ -48,7 +47,7 @@ export class CobrarComponent implements OnInit {
     private _cobrarService: CobrarService,
     private _coreMenuService: CoreMenuService,
     private modalService: NgbModal,
-    
+
   ) {
     this._unsubscribeAll = new Subject();
     this.usuario = this._coreMenuService.currentUser;
@@ -62,49 +61,59 @@ export class CobrarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.obtenerListaCobros();
+    // this.obtenerListaCobros();
   }
-  obtenerListaCobros() {
-    this._cobrarService.obtenerListaCobros({
-      ...this.cobroMonedas, page_size: this.page_size, page: this.page - 1
-    }).subscribe(info => {
+  obtenerCobro() {
 
-      this.collectionSize = info.cont;
-      this.listaCobros = info.info;
-    });
   }
 
-  comprarProducto() {
-    this.modalService.dismissAll();
-    this.modalService.open(this.CanjearProducto, {
-      centered: true,
-      size: 'lg'
-    });
+  // obtenerListaCobros() {
+  //   this._cobrarService.obtenerListaCobros({
+  //     ...this.cobroMonedas, page_size: this.page_size, page: this.page - 1
+  //   }).subscribe(info => {
+
+  //     this.collectionSize = info.cont;
+  //     this.listaCobros = info.info;
+  //   });
+  // }
+
+  // comprarProducto() {
+  //   this.modalService.dismissAll();
+  //   this.modalService.open(this.CanjearProducto, {
+  //     centered: true,
+  //     size: 'lg'
+  //   });
+  // }
+  // preautorizarCobro() {
+  //   this.cerrarModal();
+  //   this._cobrarService.preautorizarCobro({
+  //     id: this.idCobro,
+  //     estado: "Pre-autorizado",
+  //     user_id:this.usuario.id
+  //   }).subscribe((info) => {
+  //     this.mensaje = "Cobro Pre-autorizado"
+  //     this.abrirModal(this.mensajeModal);
+  //     this.obtenerListaCobros();
+  //   },
+  //     (error) => {
+  //       let errores = Object.values(error);
+  //       let llaves = Object.keys(error);
+  //       this.mensaje = "";
+  //       errores.map((infoErrores, index) => {
+  //         this.mensaje += llaves[index] + ": " + infoErrores + "<br>";
+  //       });
+  //       this.abrirModal(this.mensajeModal);
+  //     })
+  // }
+  procesarCobro() {
+    // this.idCobro = id;
+    console.log("entra");
+    this.abrirModal(this.preautorizacionCobroMdl);
   }
-  preautorizarCobro() {
-    this.cerrarModal();
-    this._cobrarService.preautorizarCobro({
-      id: this.idCobro,
-      estado: "Pre-autorizado",
-      user_id:this.usuario.id
-    }).subscribe((info) => {
-      this.mensaje = "Cobro Pre-autorizado"
-      this.abrirModal(this.mensajeModal);
-      this.obtenerListaCobros();
-    },
-      (error) => {
-        let errores = Object.values(error);
-        let llaves = Object.keys(error);
-        this.mensaje = "";
-        errores.map((infoErrores, index) => {
-          this.mensaje += llaves[index] + ": " + infoErrores + "<br>";
-        });
-        this.abrirModal(this.mensajeModal);
-      })
-  }
-  procesarCobro(id) {
-    this.idCobro = id;
-    this.abrirModal(this.confirmarPreautorizacionMdl);
+  confirmarCobro() {
+    // this.idCobro = id;
+    console.log("entra");
+    this.abrirModal(this.confirmacionCobroMdl);
   }
   abrirModal(modal) {
     this.modalService.open(modal)

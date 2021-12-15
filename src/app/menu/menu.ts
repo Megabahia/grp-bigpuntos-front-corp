@@ -15,7 +15,7 @@ export const menu: CoreMenu[] = [
   {
     id: 'corp',
     title: 'Corp',
-    role: [Role.SuperMonedas],
+    // role: [Role.SuperMonedas],
     // translate: 'MENU.PAGES.SECTION',
     type: 'collapsible',
     icon: 'coffee',
@@ -166,7 +166,7 @@ export const menu: CoreMenu[] = [
   {
     id: 'superMonedas',
     title: 'Super Monedas',
-    role: [Role.SuperMonedas],
+    // role: [Role.SuperMonedas],
     // translate: 'MENU.PAGES.SECTION',
     type: 'collapsible',
     icon: 'dollar-sign',

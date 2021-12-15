@@ -6,20 +6,16 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <input type="text" class="form-control form-control-sm" placeholder="Identificación"
-                            [(ngModel)]="cobroMonedas.identificacion">
+                        <input type="text" class="form-control form-control-sm" placeholder="Identificación" [(ngModel)]="cobroMonedas.identificacion">
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control form-control-sm" placeholder="Código de Cobro"
-                            [(ngModel)]="cobroMonedas.codigoCobro">
+                        <input type="text" class="form-control form-control-sm" placeholder="Código de Cobro" [(ngModel)]="cobroMonedas.codigoCobro">
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control form-control-sm" placeholder="Correo"
-                            [(ngModel)]="cobroMonedas.correo">
+                        <input type="text" class="form-control form-control-sm" placeholder="Correo" [(ngModel)]="cobroMonedas.correo">
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control form-control-sm" placeholder="Monto"
-                            [(ngModel)]="cobroMonedas.monto">
+                        <input type="text" class="form-control form-control-sm" placeholder="Monto" [(ngModel)]="cobroMonedas.monto">
                     </div>
 
                     <div class="col-md-2">
@@ -58,8 +54,7 @@
                             </td>
                             <td>
                                 <a class="avatar bg-primary mr-1" *ngIf="cobro.estado != 'Pre-autorizado'" (click)="procesarCobro(cobro._id)">
-                                    <div class="avatar-content" data-toggle="tooltip" data-placement="bottom"
-                                        title="Calificar">
+                                    <div class="avatar-content" data-toggle="tooltip" data-placement="bottom" title="Calificar">
                                         <i data-feather='dollar-sign'></i>
                                     </div>
                                 </a>
@@ -68,8 +63,7 @@
                     </tbody>
                 </table>
             </div>
-            <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size"
-                [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+            <ngb-pagination #paginator [collectionSize]="collectionSize" [(page)]="page" [(pageSize)]="page_size" [maxSize]="5" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
         </div>
     </section>
     <!-- users list ends -->
