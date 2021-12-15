@@ -172,12 +172,20 @@ export const menu: CoreMenu[] = [
     icon: 'dollar-sign',
     children: [
       {
+        id: 'obtenerCobroConSuperMonedas',
+        title: '**Cobrar con Super Monedas',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'users',
+        url: '/supermonedas/inicio'
+      },
+      {
         id: 'cobrarConSuperMonedas',
         title: 'Cobrar con Super Monedas',
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'users',
-        url: '/supermonedas/inicio'
+        url: '/supermonedas/cobrar'
       },
       {
         id: 'clientes',

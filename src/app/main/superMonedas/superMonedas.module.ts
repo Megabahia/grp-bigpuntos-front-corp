@@ -17,11 +17,19 @@ import { CardSnippetModule } from '../../../@core/components/card-snippet/card-s
 import { PerfilUsuarioComponent } from '../center/perfil-usuario/perfil-usuario.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { CobrarComponent } from './vistas/cobrar/cobrar.component';
 const routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
     path: 'inicio',
     component: PrincipalComponent,
+    data: { roles: [Role.SuperMonedas] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
+  {
+    path: 'cobrar',
+    component: CobrarComponent,
     data: { roles: [Role.SuperMonedas] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
@@ -34,6 +42,7 @@ const routes = [
 @NgModule({
   declarations: [
     PrincipalComponent,
+    CobrarComponent,
 
     PerfilUsuarioComponent],
   imports: [
@@ -52,8 +61,9 @@ const routes = [
     ShareButtonsModule
   ],
   exports: [
+    CobrarComponent,
 
     PrincipalComponent,
-]
+  ]
 })
 export class SuperMonedasModule { }
