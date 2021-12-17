@@ -7,6 +7,7 @@ export class User {
   firstName: string;
   lastName: string;
   persona: any;
+  empresa: any;
   roles: Array<any>;
   token?: string;
   estado: string;

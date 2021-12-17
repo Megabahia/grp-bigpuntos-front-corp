@@ -51,7 +51,7 @@ export class PrincipalComponent implements OnInit {
     
   ) {
     this._unsubscribeAll = new Subject();
-    this.usuario = this._coreMenuService.currentUser;
+    this.usuario = this._coreMenuService.grpCorpUser;
     this.cobroMonedas = {
       codigoCobro: "",
       correo: "",

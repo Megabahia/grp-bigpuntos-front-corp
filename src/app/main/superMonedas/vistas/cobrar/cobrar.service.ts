@@ -12,7 +12,12 @@ export class CobrarService {
   obtenerListaCobros(datos) {
     return this._httpClient.post<any>(`${environment.apiUrl}/corp/cobrarSupermonedas/list/`,datos);
   }
-
+  obtenerCobro(datos) {
+    return this._httpClient.post<any>(`${environment.apiUrl}/corp/pagos/list/`,datos);
+  }
+  guardarCobro(datos){
+    return this._httpClient.post<any>(`${environment.apiUrl}/corp/movimientoCobros/create/`,datos);
+  }
   // preautorizarCobro(datos){
   //   return this._httpClient.post<any>(`${environment.apiUrl}/corp/cobrarSupermonedas/update/${datos.id}`,datos);
   // }

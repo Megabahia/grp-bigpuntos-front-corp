@@ -18,12 +18,12 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Código de Cobro">
+                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Código de Cobro" [(ngModel)]="codigoCobro">
                                             </div>
                                         </div>
 
                                         <div class="col-md-2">
-                                            <a class="btn btn-primary">
+                                            <a class="btn btn-primary" (click)="obtenerCobro()">
                                                 <i data-feather='search'></i>
                                             </a>
                                         </div>
@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Nro de identificación" disabled>
+                                                <input type="text" class="form-control form-control-sm" id="identificacion" name="identificacion" placeholder="Nro de identificación" disabled [(ngModel)]="cobroConCodigo.identificacion">
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Nombres del Cliente" disabled>
+                                                <input type="text" class="form-control form-control-sm" id="nombres" name="nombres" placeholder="Nombres del Cliente" disabled [(ngModel)]="cobroConCodigo.nombres">
                                             </div>
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Apellidos del cliente" disabled>
+                                                <input type="text" class="form-control form-control-sm" id="apellidos" name="apellidos" placeholder="Apellidos del cliente" disabled [(ngModel)]="cobroConCodigo.apellidos">
                                             </div>
                                         </div>
                                     </div>
@@ -78,30 +78,38 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Fecha de cobro" disabled>
+                                                <input type="text" class="form-control form-control-sm" id="fechaCobro" name="fechaCobro" placeholder="Fecha de cobro" disabled [(ngModel)]="cobroConCodigo.fechaCobro">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <label>Monto Total de Factura $:</label>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Nro de identificación">
+                                    <form [formGroup]="cobroForm">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <label>Monto Total de Factura $:</label>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-sm" formControlName="montoTotal" id="montoTotal" name="montoTotal" placeholder="Monto Total de Factura $" [(ngModel)]="generarCobro.montoTotalFactura">
+                                                    <div *ngIf="cobroSubmitted && cobForm.montoTotal.errors" class="invalid-feedback" style="display: block;">
+                                                        <div *ngIf="cobForm.montoTotal.errors.required">Monto Total es requerido</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <label>Monto $ Supermonedas:</label>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Nro de identificación">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <label>Monto $ Supermonedas:</label>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-sm" formControlName="montoSuperMonedas" id="montoSuperMonedas" name="montoSuperMonedas" placeholder="Monto $ Supermonedas" [(ngModel)]="generarCobro.montoSupermonedas">
+                                                    <div *ngIf="cobroSubmitted && cobForm.montoSuperMonedas.errors" class="invalid-feedback" style="display: block;">
+                                                        <div *ngIf="cobForm.montoSuperMonedas.errors.required">Monto $ Supermonedas es requerido</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                     <div class="row">
                                         <div class="col-md-4">
                                         </div>
@@ -141,7 +149,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Código de Cobro" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Código de Cobro" disabled [(ngModel)]="cobroConCodigo.codigoCobro">
                         </div>
                     </div>
                 </div>
@@ -151,7 +159,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Número de Pre-Autorización" disabled>
+                            <input type="text" class="form-control form-control-sm" id="pre-autorizacion" name="pre-autorizacion" placeholder="Número de Pre-Autorización" disabled [(ngModel)]="cobroConCodigo.autorizacion">
                         </div>
                     </div>
                 </div>
@@ -161,7 +169,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Monto Total de Factura $" disabled>
+                            <input type="text" class="form-control form-control-sm" id="montoTotal" name="montoTotal" placeholder="Monto Total de Factura $" disabled [(ngModel)]="cobroConCodigo.montoTotalFactura">
                         </div>
                     </div>
                 </div>
@@ -171,7 +179,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Monto $ Supermonedas" disabled>
+                            <input type="text" class="form-control form-control-sm" id="montoSupermonedas" name="montoSupermonedas" placeholder="Monto $ Supermonedas" disabled [(ngModel)]="cobroConCodigo.montoSupermonedas">
                         </div>
                     </div>
                 </div>
@@ -181,7 +189,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Número de identificación del Cliente" disabled>
+                            <input type="text" class="form-control form-control-sm" id="identificacion" name="identificacion" placeholder="Número de identificación del Cliente" disabled [(ngModel)]="cobroConCodigo.identificacion">
                         </div>
                     </div>
                 </div>
@@ -191,7 +199,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Nombres del Cliente" disabled>
+                            <input type="text" class="form-control form-control-sm" id="nombres" name="nombres" placeholder="Nombres del Cliente" disabled [(ngModel)]="cobroConCodigo.nombres">
                         </div>
                     </div>
                 </div>
@@ -201,7 +209,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Apellidos del cliente" disabled>
+                            <input type="text" class="form-control form-control-sm" id="apellidos" name="apellidos" placeholder="Apellidos del cliente" disabled [(ngModel)]="cobroConCodigo.apellidos">
                         </div>
                     </div>
                 </div>
@@ -211,7 +219,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Fecha de cobro" disabled>
+                            <input type="text" class="form-control form-control-sm" id="fechaCobro" name="fechaCobro" placeholder="Fecha de cobro" disabled [(ngModel)]="cobroConCodigo.fechaCobro">
                         </div>
                     </div>
                 </div>
@@ -250,17 +258,17 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Código de Cobro" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Código de Cobro" disabled [(ngModel)]="cobroConCodigo.codigoCobro">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5">
-                        <label>Número de Pre-Autorización:</label>
+                        <label>Número de Autorización:</label>
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Número de Pre-Autorización" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Número de Pre-Autorización" disabled [(ngModel)]="cobroConCodigo.autorizacion">
                         </div>
                     </div>
                 </div>
@@ -270,7 +278,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Monto Total de Factura $" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Monto Total de Factura $" disabled [(ngModel)]="cobroConCodigo.montoTotalFactura">
                         </div>
                     </div>
                 </div>
@@ -280,7 +288,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Monto $ Supermonedas" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Monto $ Supermonedas" disabled [(ngModel)]="cobroConCodigo.montoSupermonedas">
                         </div>
                     </div>
                 </div>
@@ -290,7 +298,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Número de identificación del Cliente" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Número de identificación del Cliente" disabled [(ngModel)]="cobroConCodigo.identificacion">
                         </div>
                     </div>
                 </div>
@@ -300,7 +308,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Nombres del Cliente" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Nombres del Cliente" disabled [(ngModel)]="cobroConCodigo.nombres">
                         </div>
                     </div>
                 </div>
@@ -310,7 +318,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Apellidos del cliente" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Apellidos del cliente" disabled [(ngModel)]="cobroConCodigo.apellidos">
                         </div>
                     </div>
                 </div>
@@ -320,7 +328,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Fecha de cobro" disabled>
+                            <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Fecha de cobro" disabled [(ngModel)]="cobroConCodigo.fechaCobro">
                         </div>
                     </div>
                 </div>
@@ -334,7 +342,7 @@
                         </a>
                     </div>
                     <div class="col-md-5">
-                        <a class="btn btn-primary">
+                        <a class="btn btn-primary" (click)="nuevoCobro()">
                             Nuevo Cobro
                         </a>
                     </div>
@@ -346,5 +354,19 @@
 
     </div>
     <div class="modal-footer">
+    </div>
+</ng-template>
+<ng-template #mensajeModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [innerHTML]="mensaje"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="cerrarModal()">Cerrar</button>
     </div>
 </ng-template>
