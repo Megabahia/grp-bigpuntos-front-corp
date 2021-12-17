@@ -116,6 +116,7 @@ export class CobrarComponent implements OnInit {
           this.cobroConCodigo.codigoCobro = this.codigoCobro;
           this.generarCobro.user_id = info.user_id;
           this.generarCobro.codigoCobro = this.codigoCobro;
+          this.generarCobro.empresa_id = this.usuario.empresa._id;
         }
       }, (error) => {
 
