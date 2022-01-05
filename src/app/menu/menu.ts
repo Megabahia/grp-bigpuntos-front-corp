@@ -289,7 +289,7 @@ export const menu: CoreMenu[] = [
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'dollar-sign',
-        url: 'personas/supermonedas/mis-monedas'
+        url: '/comercial/solicitudes-de-credito'
       },
       {
         id: 'creditosPreAprobados',
