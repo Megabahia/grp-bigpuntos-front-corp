@@ -103,6 +103,7 @@ export class SolicitudesComponent implements OnInit {
   }
   inicializarDetalle() {
     return {
+      id: 0,
       articulo: "",
       valorUnitario: 0,
       cantidad: 0,

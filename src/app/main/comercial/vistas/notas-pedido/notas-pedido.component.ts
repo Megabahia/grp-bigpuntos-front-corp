@@ -126,6 +126,7 @@ export class NotasPedidoComponent implements OnInit {
   }
   inicializarDetalle() {
     return {
+      id: 0,
       articulo: "",
       valorUnitario: 0,
       cantidad: 0,
@@ -256,6 +257,7 @@ export class NotasPedidoComponent implements OnInit {
   }
   guardarNotaPedido() {
     this.submittedNotaPedidoForm = true;
+
     if (this.notaPedidoForm.invalid) {
       return;
     }

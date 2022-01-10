@@ -106,7 +106,7 @@
       <div class="modalsd modal-slide-in sdfade new-user-modal" id="factura">
         <div class="modal-dialog modal-slide-xl">
           <div class="modal-content pt-0">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="toggleSidebar('factura','','')">×</button>
             <div class="modal-header mb-1">
               <h5 class="modal-title" id="exampleModalLabel">Nueva solicitud</h5>
             </div>
@@ -418,7 +418,7 @@
                         data-toggle="modal" data-target="#exito" data-dismiss="modal" aria-label="Close">Guardar
                         factura</button>
                       <button type="reset" class="btn btn-outline-secondary waves-effect" data-dismiss="modal"
-                        aria-label="Close">Cancelar</button>
+                        aria-label="Close" (click)="toggleSidebar('factura','','')">Cancelar</button>
                     </div>
                   </div>
   
