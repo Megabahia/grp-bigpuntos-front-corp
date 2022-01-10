@@ -18,6 +18,9 @@ export class NotasPedidoService {
   crearNotaPedido(datos){
     return this._httpClient.post<any>(`${environment.apiUrl}/corp/notasPedidos/create/`, datos);
   }
+  actualizarNotaPedido(datos){
+    return this._httpClient.post<any>(`${environment.apiUrl}/corp/notasPedidos/update/${datos.id}`, datos);
+  }
   obtenerNotaPedido(id){
     return this._httpClient.get<any>(`${environment.apiUrl}/corp/notasPedidos/listOne/${id}`, );
   }

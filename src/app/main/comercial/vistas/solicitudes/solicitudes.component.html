@@ -256,7 +256,7 @@
                                   <div class="col-md-2 mb-lg-0 mb-2 mt-lg-0 mt-2">
                                     <p class="card-text col-title">Valor Unitario</p>
                                     <input class="form-control" type="text" name="valorUnitario"
-                                      formControlName="valorUnitario" [(ngModel)]="detalle.valorUnitario">
+                                      formControlName="valorUnitario" [(ngModel)]="detalle.valorUnitario" (change)="calcularSubtotal()">
                                     <div
                                       *ngIf="submittedNotaPedidoForm && tForm.detalles.controls[i].controls.valorUnitario.errors"
                                       class="invalid-feedback" style="display: block;">
@@ -357,7 +357,7 @@
                           <button type="button" class="btn btn-primary btn-sm btn-add-new" (click)="addItem()"
                             rippleEffect>
                             <i data-feather="plus" class="mr-25"></i>
-                            <span class="align-middle">Add Item</span>
+                            <span class="align-middle">Añadir Producto</span>
                           </button>
                         </div>
                       </div>

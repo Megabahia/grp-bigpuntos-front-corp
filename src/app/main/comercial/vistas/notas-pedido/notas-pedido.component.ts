@@ -67,6 +67,7 @@ export class NotasPedidoComponent implements OnInit {
   }
   inicializarNotaPedido(): NotaPedido {
     return {
+      id: "",
       numeroFactura: "",
       fecha: this.transformarFecha(new Date()),
       tipoIdentificacion: "",
@@ -106,7 +107,7 @@ export class NotasPedidoComponent implements OnInit {
     this.invoiceSelect = this.apiData;
     this.invoiceSelected = this.invoiceSelect;
     this.inicializarDetalles();
-
+    this.obtenerIVA();
   }
   inicializarIva(): Iva {
     return {
@@ -254,15 +255,35 @@ export class NotasPedidoComponent implements OnInit {
   guardarNotaPedido() {
     this.submittedNotaPedidoForm = true;
     if (this.notaPedidoForm.invalid) {
-      return
+      return;
+    }
+    if (!this.notaPedido.user_id) {
+      this.mensaje = "Necesita encontrar un usuario para crear la nota de pedido";
+      this.abrirModal(this.mensajeModal);
+      return;
     }
     this.calcularSubtotal();
     this.notaPedido.detalles = this.detallesTransac;
-    this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe((info) => {
-      console.log(info);
-    }, (error) => {
+    if (this.notaPedido) {
+      this._notasPedidoService.actualizarNotaPedido(this.notaPedido).subscribe((info) => {
+        this.obtenerListaNotasPedido();
+        this.toggleSidebar('factura', '');
+        this.mensaje = "Nota de pedido actualizada con éxito";
+        this.abrirModal(this.mensajeModal);
+      }, (error) => {
 
-    });
+      });
+    } else {
+      this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe((info) => {
+        this.obtenerListaNotasPedido();
+        this.toggleSidebar('factura', '');
+        this.mensaje = "Nota de pedido creada con éxito";
+        this.abrirModal(this.mensajeModal);
+      }, (error) => {
+
+      });
+    }
+
   }
   redondear(num, decimales = 2) {
     var signo = (num >= 0 ? 1 : -1);

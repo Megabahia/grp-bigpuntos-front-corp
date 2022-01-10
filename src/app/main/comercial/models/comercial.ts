@@ -1,4 +1,5 @@
 export class NotaPedido {
+    id: string;
     numeroFactura: string;
     fecha: string;
     tipoIdentificacion: string;

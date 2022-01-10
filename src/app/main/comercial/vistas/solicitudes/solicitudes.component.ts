@@ -84,7 +84,7 @@ export class SolicitudesComponent implements OnInit {
     this.invoiceSelect = this.apiData;
     this.invoiceSelected = this.invoiceSelect;
     this.inicializarDetalles();
-
+    this.obtenerIVA();
   }
   inicializarIva(): Iva {
     return {
@@ -143,6 +143,7 @@ export class SolicitudesComponent implements OnInit {
   }
   inicializarNotaPedido(): NotaPedido {
     return {
+      id:"",
       numeroFactura: "",
       fecha: this.transformarFecha(new Date()),
       tipoIdentificacion: "",
