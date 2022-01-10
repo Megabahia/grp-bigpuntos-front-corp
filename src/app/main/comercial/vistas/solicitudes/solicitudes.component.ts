@@ -23,6 +23,7 @@ export class SolicitudesComponent implements OnInit {
   @ViewChild(NgbPagination) paginator: NgbPagination;
   public mensaje;
   public submittedNotaPedidoForm = false;
+  public tipoIdentificacionOpciones;
   public page = 1;
   public page_size: any = 10;
   public maxSize;
@@ -85,6 +86,8 @@ export class SolicitudesComponent implements OnInit {
     this.invoiceSelected = this.invoiceSelect;
     this.inicializarDetalles();
     this.obtenerIVA();
+    this.obtenerTipoIdentificacionOpciones();
+
   }
   inicializarIva(): Iva {
     return {
@@ -269,6 +272,11 @@ export class SolicitudesComponent implements OnInit {
       console.log(info);
     }, (error) => {
 
+    });
+  }
+  obtenerTipoIdentificacionOpciones() {
+    this.paramService.obtenerListaPadres("TIPO_IDENTIFICACION").subscribe((info) => {
+      this.tipoIdentificacionOpciones = info;
     });
   }
   redondear(num, decimales = 2) {

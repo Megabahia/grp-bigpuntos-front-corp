@@ -27,6 +27,7 @@ export class NotasPedidoComponent implements OnInit {
   public page_size: any = 10;
   public maxSize;
   public collectionSize;
+  public tipoIdentificacionOpciones;
   public items = [{ itemId: '', itemName: '', itemQuantity: '', itemCost: '' }];
   public notaPedidoForm: FormGroup;
   public notaPedido: NotaPedido;
@@ -108,6 +109,7 @@ export class NotasPedidoComponent implements OnInit {
     this.invoiceSelected = this.invoiceSelect;
     this.inicializarDetalles();
     this.obtenerIVA();
+    this.obtenerTipoIdentificacionOpciones();
   }
   inicializarIva(): Iva {
     return {
@@ -317,6 +319,11 @@ export class NotasPedidoComponent implements OnInit {
   iniciarPaginador() {
     this.paginator.pageChange.subscribe(() => {
       this.obtenerListaNotasPedido();
+    });
+  }
+  obtenerTipoIdentificacionOpciones() {
+    this.paramService.obtenerListaPadres("TIPO_IDENTIFICACION").subscribe((info) => {
+      this.tipoIdentificacionOpciones = info;
     });
   }
   async obtenerIVA() {

@@ -163,9 +163,8 @@
                       <select class="form-control" name="tipoIdentificacion" formControlName="tipoIdentificacion"
                         [(ngModel)]="notaPedido.tipoIdentificacion">
                         <option value="">- Seleccione -</option>
-                        <option>Cédula</option>
-                        <option>RUC</option>
-                        <option>Pasaporte</option>
+                        <option *ngFor="let tipoIedntificacionOp of tipoIdentificacionOpciones" value="{{tipoIedntificacionOp.valor}}">{{tipoIedntificacionOp.nombre}}</option>
+                
                       </select>
                       <div *ngIf="submittedNotaPedidoForm && tForm.tipoIdentificacion.errors" class="invalid-feedback"
                         style="display: block;">
