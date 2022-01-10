@@ -87,7 +87,6 @@ export class SolicitudesComponent implements OnInit {
     this.inicializarDetalles();
     this.obtenerIVA();
     this.obtenerTipoIdentificacionOpciones();
-
   }
   inicializarIva(): Iva {
     return {
@@ -139,24 +138,19 @@ export class SolicitudesComponent implements OnInit {
     return this.notaPedidoForm.controls;
   }
   toggleSidebar(name, user_id, id): void {
-
+    
     this._solicitudesCreditosService.obtenerNotaPedido(id).subscribe((info) => {
       this.notaPedido = info;
       this.detalles = info.detalles;
     },
       (error) => {
+
+        this.obtenerClienteId(user_id);
         this.notaPedido = this.inicializarNotaPedido();
-        this.detalles = [];
+        this.notaPedido.credito = id;
+        this.inicializarDetalles();
+
       });
-
-    if (this.notaPedido.id == "") {
-
-      this.obtenerClienteId(user_id);
-      this.notaPedido.credito = id;
-      this.notaPedido = this.inicializarNotaPedido();
-      this.detalles = [];
-
-    }
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
   inicializarNotaPedido(): NotaPedido {
