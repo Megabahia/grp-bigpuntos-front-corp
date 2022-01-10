@@ -200,7 +200,7 @@ export class SolicitudesComponent implements OnInit {
       });
   }
   obtenerCliente() {
-    this._solicitudesCreditosService.obtenerInformacionPersonaID({identificacion: this.notaPedido.identificacion})
+    this._solicitudesCreditosService.obtenerInformacionPersona({identificacion: this.notaPedido.identificacion})
       .subscribe((info) => {
         this.notaPedido.identificacion = info.identificacion;
         this.notaPedido.razonSocial = info.nombres + " " + info.apellidos;

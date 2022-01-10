@@ -266,7 +266,7 @@ export class NotasPedidoComponent implements OnInit {
     }
     this.calcularSubtotal();
     this.notaPedido.detalles = this.detallesTransac;
-    if (this.notaPedido) {
+    if (this.notaPedido.id) {
       this._notasPedidoService.actualizarNotaPedido(this.notaPedido).subscribe((info) => {
         this.obtenerListaNotasPedido();
         this.toggleSidebar('factura', '');
