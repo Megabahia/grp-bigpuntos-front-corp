@@ -5,20 +5,20 @@ import { environment } from 'environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SolicitudesService {
+export class NotasPedidoService {
 
   constructor(private _httpClient: HttpClient) { }
 
-  obtenerListaSolicitudesCreditos(datos) {
-    return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPreaprobados/list/corp/`, datos);
+  obtenerListaNotasPedido(datos) {
+    return this._httpClient.post<any>(`${environment.apiUrl}/corp/notasPedidos/list/`, datos);
   }
   obtenerInformacionPersona(datos){
     return this._httpClient.post<any>(`${environment.apiUrl}/personas/personas/listOne/cedula/`, datos);
   }
-  obtenerInformacionPersonaID(id){
-    return this._httpClient.get<any>(`${environment.apiUrl}/personas/personas/listOne/${id}`);
-  }
   crearNotaPedido(datos){
     return this._httpClient.post<any>(`${environment.apiUrl}/corp/notasPedidos/create/`, datos);
+  }
+  obtenerNotaPedido(id){
+    return this._httpClient.get<any>(`${environment.apiUrl}/corp/notasPedidos/listOne/${id}`, );
   }
 }

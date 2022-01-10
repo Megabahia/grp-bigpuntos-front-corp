@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { SolicitudesService } from './solicitudes.service';
+import { NotasPedidoService } from './notas-pedido.service';
 import { NgbModal, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { repeaterAnimation } from 'app/main/elementos/forms/form-repeater/form-repeater.animation';
@@ -10,15 +10,15 @@ import { Iva, NotaPedido } from '../../models/comercial';
 import { ParametrizacionesService } from 'app/main/center/parametrizaciones.service';
 
 @Component({
-  selector: 'app-solicitudes',
-  templateUrl: './solicitudes.component.html',
-  styleUrls: ['./solicitudes.component.scss'],
+  selector: 'app-notas-pedido',
+  templateUrl: './notas-pedido.component.html',
+  styleUrls: ['./notas-pedido.component.scss'],
   animations: [repeaterAnimation],
   encapsulation: ViewEncapsulation.None,
   providers: [DatePipe]
 
 })
-export class SolicitudesComponent implements OnInit {
+export class NotasPedidoComponent implements OnInit {
   @ViewChild('mensajeModal') mensajeModal;
   @ViewChild(NgbPagination) paginator: NgbPagination;
   public mensaje;
@@ -29,9 +29,9 @@ export class SolicitudesComponent implements OnInit {
   public collectionSize;
   public items = [{ itemId: '', itemName: '', itemQuantity: '', itemCost: '' }];
   public notaPedidoForm: FormGroup;
-  public notaPedido:NotaPedido;
-  public iva;
+  public notaPedido: NotaPedido;
   public usuario;
+  public iva;
   public item = {
     itemName: '',
     itemQuantity: '',
@@ -45,27 +45,49 @@ export class SolicitudesComponent implements OnInit {
   public invoiceSelect = [];
   public invoiceSelected;
 
-  public listaSolicitudes: [] = [];
+  public listaNotasPedido: [] = [];
   public nombresCompleto: string = "";
   public cedula: string = "";
 
   constructor(
     private _formBuilder: FormBuilder,
     private _coreSidebarService: CoreSidebarService,
-    private _solicitudesCreditosService: SolicitudesService,
+    private _notasPedidoService: NotasPedidoService,
     private datePipe: DatePipe,
     private _coreMenuService: CoreMenuService,
     private paramService: ParametrizacionesService,
     private modalService: NgbModal
+
   ) {
     this.usuario = this._coreMenuService.grpCorpUser;
     this.notaPedido = this.inicializarNotaPedido();
     this.notaPedido.nombreVendedor = this.usuario.persona.nombres + " " + this.usuario.persona.apellidos;
 
     this.iva = this.inicializarIva();
-
-   }
-
+  }
+  inicializarNotaPedido(): NotaPedido {
+    return {
+      numeroFactura: "",
+      fecha: this.transformarFecha(new Date()),
+      tipoIdentificacion: "",
+      identificacion: "",
+      razonSocial: "",
+      direccion: "",
+      telefono: "",
+      correo: "",
+      nombreVendedor: this.usuario.persona.nombres + " " + this.usuario.persona.apellidos,
+      subTotal: 0,
+      descuento: 0,
+      iva: 0,
+      total: 0,
+      canal: "",
+      numeroProductosComprados: 0,
+      user_id: "",
+      detalles: [],
+      credito: "",
+      empresaComercial: this.usuario.empresa._id
+    }
+  }
   ngOnInit(): void {
     this.notaPedidoForm = this._formBuilder.group({
       // fecha: ['', [Validators.required]],
@@ -135,34 +157,19 @@ export class SolicitudesComponent implements OnInit {
   get tForm() {
     return this.notaPedidoForm.controls;
   }
-  toggleSidebar(name,user_id,id): void {
-    this.obtenerClienteId(user_id);
-    this.notaPedido.credito = id;
-    this.inicializarNotaPedido();
-    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
-  }
-  inicializarNotaPedido(): NotaPedido {
-    return {
-      numeroFactura: "",
-      fecha: this.transformarFecha(new Date()),
-      tipoIdentificacion: "",
-      identificacion: "",
-      razonSocial: "",
-      direccion: "",
-      telefono: "",
-      correo: "",
-      nombreVendedor: this.usuario.persona.nombres + " " + this.usuario.persona.apellidos,
-      subTotal: 0,
-      descuento: 0,
-      iva: 0,
-      total: 0,
-      canal: "",
-      numeroProductosComprados: 0,
-      user_id: "",
-      detalles: [],
-      credito: "",
-      empresaComercial: this.usuario.empresa._id
+  toggleSidebar(name, id): void {
+    if (id == "") {
+      this.inicializarNotaPedido();
+    } else {
+      this._notasPedidoService.obtenerNotaPedido(id).subscribe((info) => {
+        this.notaPedido = info;
+        this.detalles = info.detalles;
+      },
+        (error) => {
+
+        });
     }
+    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
   public dateOptions = {
     altInput: true,
@@ -180,23 +187,10 @@ export class SolicitudesComponent implements OnInit {
   };
   ngAfterViewInit() {
     this.iniciarPaginador();
-    this.obtenerListaSolicitudesCreditos();
-  }
-  obtenerClienteId(id) {
-    this._solicitudesCreditosService.obtenerInformacionPersonaID(id)
-      .subscribe((info) => {
-        this.notaPedido.identificacion = info.identificacion;
-        this.notaPedido.razonSocial = info.nombres + " " + info.apellidos;
-        this.notaPedido.telefono = info.telefono;
-        this.notaPedido.direccion = info.direccion;
-        this.notaPedido.correo = info.email;
-        this.notaPedido.user_id = info.user_id;
-      }, (error) => {
-
-      });
+    this.obtenerListaNotasPedido();
   }
   obtenerCliente() {
-    this._solicitudesCreditosService.obtenerInformacionPersonaID({identificacion: this.notaPedido.identificacion})
+    this._notasPedidoService.obtenerInformacionPersona({ identificacion: this.notaPedido.identificacion })
       .subscribe((info) => {
         this.notaPedido.identificacion = info.identificacion;
         this.notaPedido.razonSocial = info.nombres + " " + info.apellidos;
@@ -264,7 +258,7 @@ export class SolicitudesComponent implements OnInit {
     }
     this.calcularSubtotal();
     this.notaPedido.detalles = this.detallesTransac;
-    this._solicitudesCreditosService.crearNotaPedido(this.notaPedido).subscribe((info) => {
+    this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe((info) => {
       console.log(info);
     }, (error) => {
 
@@ -286,25 +280,24 @@ export class SolicitudesComponent implements OnInit {
   redondeoValor(valor) {
     return isNaN(valor) ? valor : parseFloat(valor).toFixed(2);
   }
-  obtenerListaSolicitudesCreditos() {
-    this._solicitudesCreditosService.obtenerListaSolicitudesCreditos({
-      page: this.page - 1, 
-      page_size: this.page_size, 
-      cedula: this.cedula, 
+  obtenerListaNotasPedido() {
+    this._notasPedidoService.obtenerListaNotasPedido({
+      page: this.page - 1,
+      page_size: this.page_size,
+      cedula: this.cedula,
       nombresCompleto: this.nombresCompleto,
-
+      empresa_comercial: this.usuario.empresa._id
     }).subscribe(info => {
-      this.listaSolicitudes = info.info;
+      this.listaNotasPedido = info.info;
       this.collectionSize = info.cont;
     });
   }
 
   iniciarPaginador() {
     this.paginator.pageChange.subscribe(() => {
-      this.obtenerListaSolicitudesCreditos();
+      this.obtenerListaNotasPedido();
     });
   }
-
   async obtenerIVA() {
     await this.paramService.obtenerParametroNombreTipo("ACTIVO", "TIPO_IVA").subscribe((info) => {
       this.iva = info;
@@ -321,5 +314,4 @@ export class SolicitudesComponent implements OnInit {
   cerrarModal() {
     this.modalService.dismissAll();
   }
-
 }
