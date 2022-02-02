@@ -89,9 +89,12 @@
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-sm" formControlName="montoTotal" id="montoTotal" name="montoTotal" placeholder="Monto Total de Factura $" [(ngModel)]="generarCobro.montoTotalFactura">
+                                                    <input type="number" class="form-control form-control-sm" formControlName="montoTotal" id="montoTotal" name="montoTotal" placeholder="Monto Total de Factura $" [(ngModel)]="generarCobro.montoTotalFactura">
                                                     <div *ngIf="cobroSubmitted && cobForm.montoTotal.errors" class="invalid-feedback" style="display: block;">
                                                         <div *ngIf="cobForm.montoTotal.errors.required">Monto Total es requerido</div>
+                                                        <div *ngIf="cobForm.montoTotal.errors.min">Debe ser mayor
+                                                            a 0
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,9 +105,12 @@
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-sm" formControlName="montoSuperMonedas" id="montoSuperMonedas" name="montoSuperMonedas" placeholder="Monto $ Supermonedas" [(ngModel)]="generarCobro.montoSupermonedas">
+                                                    <input type="number" class="form-control form-control-sm" formControlName="montoSuperMonedas" id="montoSuperMonedas" name="montoSuperMonedas" placeholder="Monto $ Supermonedas" [(ngModel)]="generarCobro.montoSupermonedas">
                                                     <div *ngIf="cobroSubmitted && cobForm.montoSuperMonedas.errors" class="invalid-feedback" style="display: block;">
                                                         <div *ngIf="cobForm.montoSuperMonedas.errors.required">Monto $ Supermonedas es requerido</div>
+                                                        <div *ngIf="cobForm.montoSuperMonedas.errors.min">Debe ser mayor
+                                                            a 0
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,9 +120,9 @@
                                         <div class="col-md-4">
                                         </div>
                                         <div class="col-md-4">
-                                            <a class="btn btn-primary" (click)="procesarCobro()">
+                                            <button class="btn btn-primary" (click)="procesarCobro()" [disabled]="cobrar">
                                                 Cobrar
-                                            </a>
+                                            </button>
                                         </div>
                                         <div class="col-md-4">
                                         </div>
@@ -243,6 +249,7 @@
     </div>
 </ng-template>
 <ng-template #confirmacionCobroMdl let-modal>
+<div id="print-section">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">Confirmación de Cobro</h5>
         <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
@@ -337,9 +344,9 @@
                     <div class="col-md-1">
                     </div>
                     <div class="col-md-5">
-                        <a class="btn btn-primary">
+                        <button class="btn btn-primary" [useExistingCss]="true" printSectionId="print-section" ngxPrint>
                             Imprimir
-                        </a>
+                        </button>
                     </div>
                     <div class="col-md-5">
                         <a class="btn btn-primary" (click)="nuevoCobro()">
@@ -355,6 +362,7 @@
     </div>
     <div class="modal-footer">
     </div>
+</div>
 </ng-template>
 <ng-template #mensajeModal let-modal>
     <div class="modal-header">

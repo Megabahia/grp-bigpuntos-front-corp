@@ -50,6 +50,8 @@ export class CobrarComponent implements OnInit {
 
   public cantidadMonedas;
   public usuario: User;
+  public cobrar: boolean = true;
+  public montoSupermonedas;
 
   constructor(
     private _cobrarService: CobrarService,
@@ -73,8 +75,8 @@ export class CobrarComponent implements OnInit {
       apellidos: "",
       fechaCobro: this.transformarFecha(Date.now()),
       codigoPreautorizacion: "",
-      montoTotalFactura: 0,
-      montoSupermonedas: 0,
+      montoTotalFactura: null,
+      montoSupermonedas: null,
       codigoCobro: ""
     }
 
@@ -84,8 +86,12 @@ export class CobrarComponent implements OnInit {
       user_id: "",
       empresa_id: this.usuario.empresa._id,
       codigoCobro: "",
-      montoTotalFactura: 0,
-      montoSupermonedas: 0,
+      montoTotalFactura: null,
+      montoSupermonedas: null,
+      nombres: null,
+      apellidos: null,
+      identificacion: null,
+      whatsapp: null,
     }
 
   }
@@ -98,16 +104,20 @@ export class CobrarComponent implements OnInit {
   }
   ngOnInit(): void {
     this.cobroForm = this._formBuilder.group({
-      montoTotal: ['', [Validators.required]],
-      montoSuperMonedas: ['', [Validators.required]]
+      montoTotal: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(1)]],
+      montoSuperMonedas: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(1)]]
     });
   }
   obtenerCobro() {
-
-    this._cobrarService.obtenerCobro({ codigoCobro: this.codigoCobro }).subscribe(
+    this.cobrar = true;
+    this._cobrarService.obtenerCobro({ codigoCobro: this.codigoCobro, empresa_id: this.usuario.empresa._id }).subscribe(
       (info) => {
         if (info.error) {
-          this.mensaje = info.error.tiempo + "</br>Estado:" + info.error.estado;
+          if(info.error.message){
+            this.mensaje = info.error.message;
+          }else{
+            this.mensaje = info.error.tiempo + "</br>Estado: " + info.error.estado;
+          }
           this.abrirModal(this.mensajeModal);
         } else {
           this.cobroConCodigo = info;
@@ -117,6 +127,11 @@ export class CobrarComponent implements OnInit {
           this.generarCobro.user_id = info.user_id;
           this.generarCobro.codigoCobro = this.codigoCobro;
           this.generarCobro.empresa_id = this.usuario.empresa._id;
+          this.generarCobro.nombres = info.nombres;
+          this.generarCobro.apellidos = info.apellidos;
+          this.generarCobro.whatsapp = info.whatsapp;
+          this.montoSupermonedas = info.monto;
+          this.cobrar = false;
         }
       }, (error) => {
 
@@ -167,6 +182,13 @@ export class CobrarComponent implements OnInit {
     if (this.cobroForm.invalid) {
       return;
     }
+
+    if(this.montoSupermonedas != this.generarCobro.montoSupermonedas){
+      this.mensaje = 'El monto que ingreso no coincide con el monto del comprobante.';
+      this.abrirModal(this.mensajeModal);
+      return;
+    }
+
     this.cobroConCodigo.montoSupermonedas = this.generarCobro.montoSupermonedas;
     this.cobroConCodigo.montoTotalFactura = this.generarCobro.montoTotalFactura;
     this.abrirModal(this.preautorizacionCobroMdl);

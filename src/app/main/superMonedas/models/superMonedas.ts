@@ -22,4 +22,8 @@ export class GenerarCobro {
     codigoCobro: string;
     montoTotalFactura: number;
     montoSupermonedas: number;
+    nombres: string;
+    apellidos: string;
+    identificacion: string;
+    whatsapp: string;
 }

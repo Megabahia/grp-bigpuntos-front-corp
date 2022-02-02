@@ -18,6 +18,7 @@ import { PerfilUsuarioComponent } from '../center/perfil-usuario/perfil-usuario.
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { CobrarComponent } from './vistas/cobrar/cobrar.component';
+import {NgxPrintModule} from 'ngx-print';
 const routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
@@ -58,7 +59,8 @@ const routes = [
     Ng2FlatpickrModule,
     CardSnippetModule,
     ShareIconsModule,
-    ShareButtonsModule
+    ShareButtonsModule,
+    NgxPrintModule
   ],
   exports: [
     CobrarComponent,
