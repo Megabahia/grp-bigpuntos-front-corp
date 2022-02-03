@@ -130,6 +130,7 @@ export class CobrarComponent implements OnInit {
           this.generarCobro.nombres = info.nombres;
           this.generarCobro.apellidos = info.apellidos;
           this.generarCobro.whatsapp = info.whatsapp;
+          this.generarCobro.identificacion = info.identificacion;
           this.montoSupermonedas = info.monto;
           this.cobrar = false;
         }

@@ -188,6 +188,14 @@ export const menu: CoreMenu[] = [
         url: '/supermonedas/cobrar'
       },
       {
+        id: 'reporteCobrosConSupermonedas',
+        title: 'Reporte de Cobros con Supermonedas',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        icon: 'users',
+        url: '/supermonedas/reporteCobros'
+      },
+      {
         id: 'clientes',
         title: 'Clientes',
         // translate: 'MENU.APPS.EMAIL',

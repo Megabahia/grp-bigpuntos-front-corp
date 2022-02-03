@@ -19,6 +19,7 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { CobrarComponent } from './vistas/cobrar/cobrar.component';
 import {NgxPrintModule} from 'ngx-print';
+import { ReporteCobrosComponent } from './vistas/reporte-cobros/reporte-cobros.component';
 const routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
@@ -35,6 +36,13 @@ const routes = [
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
+  {
+    path: 'reporteCobros',
+    component: ReporteCobrosComponent,
+    // data: { roles: [Role.SuperMonedas] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
 
 
 
@@ -44,8 +52,9 @@ const routes = [
   declarations: [
     PrincipalComponent,
     CobrarComponent,
-
-    PerfilUsuarioComponent],
+    PerfilUsuarioComponent,
+    ReporteCobrosComponent
+  ],
   imports: [
     CoreCommonModule,
     RouterModule.forChild(routes),
