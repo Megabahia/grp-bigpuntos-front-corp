@@ -33,7 +33,7 @@ export class ReporteCobrosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.obtenerListaCobros();
+    // this.obtenerListaCobros();
   }
 
   transformarFecha(fecha) {
@@ -44,18 +44,20 @@ export class ReporteCobrosComponent implements OnInit {
   exportarExcel() {
     this.infoExportar = [];
     const headers = ['Fecha cobro', 'Monto factura', 'Numero factura', 'Monto cobrado con Supermonedas', 'Nombre cliente', 'Cédula', 'WhatsApp'];
-    let objetoExportar = Object.create(this.cobros);
-    objetoExportar.forEach((row: any) => {
-      const values = [];
-      values.push(this.transformarFecha(row['fechaCobro']));
-      values.push(row['montoTotalFactura']);
-      values.push(row['numeroFactura']);
-      values.push(row['montoSupermonedas']);
-      values.push(row['nombreCompleto']);
-      values.push(row['identificacion']);
-      values.push(row['whatsapp']);
-      this.infoExportar.push(values);
-    });
+    if(this.cobros){
+      let objetoExportar = Object.create(this.cobros);
+      objetoExportar.forEach((row: any) => {
+        const values = [];
+        values.push(this.transformarFecha(row['fechaCobro']));
+        values.push(row['montoTotalFactura']);
+        values.push(row['numeroFactura']);
+        values.push(row['montoSupermonedas']);
+        values.push(row['nombreCompleto']);
+        values.push(row['identificacion']);
+        values.push(row['whatsapp']);
+        this.infoExportar.push(values);
+      });
+    }
     const reportData = {
       title: 'Reporte de Cobros con Supermonedas',
       data: this.infoExportar,
