@@ -33,7 +33,7 @@ export class ReporteCobrosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // this.obtenerListaCobros();
+    this.obtenerListaCobros();
   }
 
   transformarFecha(fecha) {
