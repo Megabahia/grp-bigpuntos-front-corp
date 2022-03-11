@@ -44,6 +44,10 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/comercial/comercial.module').then(m => m.ComercialModule),
   },
   {
+    path: 'creditos',
+    loadChildren: () => import('./main/creditos/creditos.module').then(m => m.CreditosModule),
+  },
+  {
     path: '**',
     redirectTo: '/pages/miscellaneous/error' //Error 404 - Page not found
   },

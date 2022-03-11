@@ -327,5 +327,14 @@ export const menu: CoreMenu[] = [
     type: 'item',
     icon: 'dollar-sign',
     url: 'personas/supermonedas/mis-monedas',
+  },
+  {
+    id: 'creditosPreapobados',
+    title: 'Creditos PreAprobados',
+    // translate: 'MENU.HOME',
+    // role: [Role.SuperMonedas],
+    type: 'item',
+    icon: 'credit-card',
+    url: 'creditos/creditosPreAprobados',
   }
 ]
