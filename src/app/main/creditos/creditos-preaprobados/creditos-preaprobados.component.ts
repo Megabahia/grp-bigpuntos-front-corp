@@ -25,7 +25,9 @@ export class CreditosPreaprobadosComponent implements OnInit {
     private _coreMenuService: CoreMenuService,
     private datePipe: DatePipe,
     private exportFile: ExportService,
-  ) { }
+  ) { 
+    this.usuario = this._coreMenuService.grpCorpUser;
+  }
 
   ngOnInit(): void {
   }
