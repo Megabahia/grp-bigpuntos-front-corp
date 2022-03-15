@@ -73,7 +73,6 @@ export class CreditosPreaprobadosComponent implements OnInit {
       page: this.page - 1, 
       page_size: this.page_size,
       empresaComercial_id: this.usuario.empresa._id,
-      tipoCredito: "PreAprobado",
       estado: "Confirmado",
     }).subscribe(info => {
       this.listaCreditos = info.info;
