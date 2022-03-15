@@ -38,6 +38,9 @@
                             <tr>
                                 <th>Fecha de solicitud</th>
                                 <th>Canal de crédito</th>
+                                <th>Identificacion</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
                                 <th>Valor</th>
                                 <th>Plazo del crédito</th>
                                 <th>Interes</th>
@@ -56,7 +59,10 @@
 
                             <tr *ngFor="let credito of listaCreditos">
                                 <td>{{transformarFecha(credito.created_at)}}</td>
+                                <td>{{credito.canal}}</td>
+                                <td>{{credito.numeroIdentificacion}}</td>
                                 <td>{{credito.nombres}}</td>
+                                <td>{{credito.apellidos}}</td>
                                 <td>{{credito.monto}}</td>
                                 <td>{{credito.plazo}} meses</td>
                                 <td>{{credito.interes}}</td>
