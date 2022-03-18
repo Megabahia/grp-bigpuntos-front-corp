@@ -1,20 +1,32 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CreditosService {
-
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient) {}
   obtenerCreditos(datos) {
-    return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/list/`, datos);
+    return this._httpClient.post<any>(
+      `${environment.apiUrl}/corp/creditoPersonas/list/`,
+      datos
+    );
   }
   obtenerCredito(id) {
-    return this._httpClient.get<any>(`${environment.apiUrl}/corp/creditoPersonas/listOne/${id}`);
+    return this._httpClient.get<any>(
+      `${environment.apiUrl}/corp/creditoPersonas/listOne/${id}`
+    );
   }
   actualizarCreditos(datos) {
-    return this._httpClient.post<any>(`${environment.apiUrl}/corp/creditoPersonas/update/${datos.get('id')}`, datos);
+    return this._httpClient.post<any>(
+      `${environment.apiUrl}/corp/creditoPersonas/update/${datos.get("id")}`,
+      datos
+    );
+  }
+  obtenerCreditoSelecionado(id) {
+    return this._httpClient.get<any>(
+      `${environment.apiUrl}/corp/creditoPersonas/listOne/persona/${id}`
+    );
   }
 }

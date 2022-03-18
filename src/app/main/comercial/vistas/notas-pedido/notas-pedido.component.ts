@@ -1,26 +1,29 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NotasPedidoService } from './notas-pedido.service';
-import { NgbModal, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
-import { repeaterAnimation } from 'app/main/elementos/forms/form-repeater/form-repeater.animation';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { CoreMenuService } from '@core/components/core-menu/core-menu.service';
-import { Iva, NotaPedido } from '../../models/comercial';
-import { ParametrizacionesService } from 'app/main/center/parametrizaciones.service';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { NotasPedidoService } from "./notas-pedido.service";
+import { NgbModal, NgbPagination } from "@ng-bootstrap/ng-bootstrap";
+import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
+import { repeaterAnimation } from "app/main/elementos/forms/form-repeater/form-repeater.animation";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { DatePipe } from "@angular/common";
+import { CoreMenuService } from "@core/components/core-menu/core-menu.service";
+import { Iva, NotaPedido } from "../../models/comercial";
+import { ParametrizacionesService } from "app/main/center/parametrizaciones.service";
 
 @Component({
-  selector: 'app-notas-pedido',
-  templateUrl: './notas-pedido.component.html',
-  styleUrls: ['./notas-pedido.component.scss'],
+  selector: "app-notas-pedido",
+  templateUrl: "./notas-pedido.component.html",
+  styleUrls: ["./notas-pedido.component.scss"],
   animations: [repeaterAnimation],
   encapsulation: ViewEncapsulation.None,
-  providers: [DatePipe]
-
+  providers: [DatePipe],
 })
 export class NotasPedidoComponent implements OnInit {
-  @ViewChild('mensajeModal') mensajeModal;
+  @ViewChild("mensajeModal") mensajeModal;
+  @ViewChild("ConfirVent") ConfirVent;
   @ViewChild(NgbPagination) paginator: NgbPagination;
+  public confirmarDatosForm: FormGroup;
+
+  public confirmarDatosSubmit = false;
   public mensaje;
   public submittedNotaPedidoForm = false;
   public page = 1;
@@ -28,15 +31,15 @@ export class NotasPedidoComponent implements OnInit {
   public maxSize;
   public collectionSize;
   public tipoIdentificacionOpciones;
-  public items = [{ itemId: '', itemName: '', itemQuantity: '', itemCost: '' }];
+  public items = [{ itemId: "", itemName: "", itemQuantity: "", itemCost: "" }];
   public notaPedidoForm: FormGroup;
   public notaPedido: NotaPedido;
   public usuario;
   public iva;
   public item = {
-    itemName: '',
-    itemQuantity: '',
-    itemCost: ''
+    itemName: "",
+    itemQuantity: "",
+    itemCost: "",
   };
   public numRegex = /^-?\d*[.,]?\d{0,2}$/;
   public apiData;
@@ -58,11 +61,11 @@ export class NotasPedidoComponent implements OnInit {
     private _coreMenuService: CoreMenuService,
     private paramService: ParametrizacionesService,
     private modalService: NgbModal
-
   ) {
     this.usuario = this._coreMenuService.grpCorpUser;
     this.notaPedido = this.inicializarNotaPedido();
-    this.notaPedido.nombreVendedor = this.usuario.persona.nombres + " " + this.usuario.persona.apellidos;
+    this.notaPedido.nombreVendedor =
+      this.usuario.persona.nombres + " " + this.usuario.persona.apellidos;
 
     this.iva = this.inicializarIva();
   }
@@ -77,7 +80,8 @@ export class NotasPedidoComponent implements OnInit {
       direccion: "",
       telefono: "",
       correo: "",
-      nombreVendedor: this.usuario.persona.nombres + " " + this.usuario.persona.apellidos,
+      nombreVendedor:
+        this.usuario.persona.nombres + " " + this.usuario.persona.apellidos,
       subTotal: 0,
       descuento: 0,
       iva: 0,
@@ -87,23 +91,28 @@ export class NotasPedidoComponent implements OnInit {
       user_id: "",
       detalles: [],
       credito: "",
-      empresaComercial: this.usuario.empresa._id
-    }
+      empresaComercial: this.usuario.empresa._id,
+    };
   }
   ngOnInit(): void {
     this.notaPedidoForm = this._formBuilder.group({
       // fecha: ['', [Validators.required]],
-      tipoIdentificacion: ['', [Validators.required]],
-      identificacion: ['', [Validators.required]],
-      razonSocial: ['', [Validators.required]],
-      direccion: ['', [Validators.required]],
-      telefono: ['', [Validators.required]],
-      correo: ['', [Validators.required]],
-      nombreVendedor: ['', [Validators.required]],
+      tipoIdentificacion: ["", [Validators.required]],
+      identificacion: ["", [Validators.required]],
+      razonSocial: ["", [Validators.required]],
+      direccion: ["", [Validators.required]],
+      telefono: ["", [Validators.required]],
+      correo: ["", [Validators.required]],
+      nombreVendedor: ["", [Validators.required]],
       // canal: ['', [Validators.required]],
-      detalles: this._formBuilder.array([
-        this.crearDetalleGrupo()
-      ]),
+      detalles: this._formBuilder.array([this.crearDetalleGrupo()]),
+    });
+
+    this.confirmarDatosForm = this._formBuilder.group({
+      nroAutCli: ["", [Validators.required]],
+      nroAutCorp: ["", [Validators.required]],
+      nroFact: ["", [Validators.required]],
+      nroVenta: ["", [Validators.required]],
     });
     this.invoiceSelect = this.apiData;
     this.invoiceSelected = this.invoiceSelect;
@@ -121,7 +130,7 @@ export class NotasPedidoComponent implements OnInit {
       tipo: "",
       tipoVariable: "",
       updated_at: "",
-      valor: 0
+      valor: 0,
     };
   }
   inicializarDetalle() {
@@ -136,75 +145,96 @@ export class NotasPedidoComponent implements OnInit {
       descuento: 0,
       impuesto: 0,
       valorDescuento: 0,
-    }
+    };
   }
   crearDetalleGrupo() {
     return this._formBuilder.group({
       // codigo: ['', [Validators.required]],
-      articulo: ['', [Validators.required]],
+      articulo: ["", [Validators.required]],
       valorUnitario: [0, [Validators.required]],
-      cantidad: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(1)]],
+      cantidad: [
+        0,
+        [
+          Validators.required,
+          Validators.pattern("^[0-9]*$"),
+          Validators.min(1),
+        ],
+      ],
       precio: [0, [Validators.required]],
-      informacionAdicional: ['', [Validators.required]],
+      informacionAdicional: ["", [Validators.required]],
       descuento: [0, [Validators.required, Validators.pattern(this.numRegex)]],
-      valorDescuento: [0, [Validators.required]]
+      valorDescuento: [0, [Validators.required]],
     });
   }
   transformarFecha(fecha) {
-    let nuevaFecha = this.datePipe.transform(fecha, 'yyyy-MM-dd');
+    let nuevaFecha = this.datePipe.transform(fecha, "yyyy-MM-dd");
     return nuevaFecha;
   }
 
   get detallesArray(): FormArray {
-    return this.notaPedidoForm.get('detalles') as FormArray;
+    return this.notaPedidoForm.get("detalles") as FormArray;
   }
   get tForm() {
     return this.notaPedidoForm.controls;
   }
+  get confrimacionForm() {
+    return this.confirmarDatosForm.controls;
+  }
+
+  enviarMonto() {
+    this.confirmarDatosSubmit = true;
+  }
+
   toggleSidebar(name, id): void {
     if (id == "") {
       this.inicializarNotaPedido();
     } else {
-      this._notasPedidoService.obtenerNotaPedido(id).subscribe((info) => {
-        this.notaPedido = info;
-        this.detalles = info.detalles;
-      },
-        (error) => {
-
-        });
+      this._notasPedidoService.obtenerNotaPedido(id).subscribe(
+        (info) => {
+          this.notaPedido = info;
+          this.detalles = info.detalles;
+        },
+        (error) => {}
+      );
     }
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
   public dateOptions = {
     altInput: true,
-    mode: 'single',
-    altInputClass: 'form-control flat-picker flatpickr-input invoice-edit-input',
-    defaultDate: ['2020-05-01'],
-    altFormat: 'Y-n-j'
+    mode: "single",
+    altInputClass:
+      "form-control flat-picker flatpickr-input invoice-edit-input",
+    defaultDate: ["2020-05-01"],
+    altFormat: "Y-n-j",
   };
   public dueDateOptions = {
     altInput: true,
-    mode: 'single',
-    altInputClass: 'form-control flat-picker flatpickr-input invoice-edit-input',
-    defaultDate: ['2020-05-17'],
-    altFormat: 'Y-n-j'
+    mode: "single",
+    altInputClass:
+      "form-control flat-picker flatpickr-input invoice-edit-input",
+    defaultDate: ["2020-05-17"],
+    altFormat: "Y-n-j",
   };
   ngAfterViewInit() {
     this.iniciarPaginador();
     this.obtenerListaNotasPedido();
   }
   obtenerCliente() {
-    this._notasPedidoService.obtenerInformacionPersona({ identificacion: this.notaPedido.identificacion })
-      .subscribe((info) => {
-        this.notaPedido.identificacion = info.identificacion;
-        this.notaPedido.razonSocial = info.nombres + " " + info.apellidos;
-        this.notaPedido.telefono = info.telefono;
-        this.notaPedido.direccion = info.direccion;
-        this.notaPedido.correo = info.email;
-        this.notaPedido.user_id = info.user_id;
-      }, (error) => {
-
-      });
+    this._notasPedidoService
+      .obtenerInformacionPersona({
+        identificacion: this.notaPedido.identificacion,
+      })
+      .subscribe(
+        (info) => {
+          this.notaPedido.identificacion = info.identificacion;
+          this.notaPedido.razonSocial = info.nombres + " " + info.apellidos;
+          this.notaPedido.telefono = info.telefono;
+          this.notaPedido.direccion = info.direccion;
+          this.notaPedido.correo = info.email;
+          this.notaPedido.user_id = info.user_id;
+        },
+        (error) => {}
+      );
   }
   inicializarDetalles() {
     this.detalles = [];
@@ -233,27 +263,34 @@ export class NotasPedidoComponent implements OnInit {
     let cantidad = 0;
     if (detalles) {
       detalles.map((valor) => {
-        let valorUnitario = Number(valor.valorUnitario) ? Number(valor.valorUnitario) : 0;
+        let valorUnitario = Number(valor.valorUnitario)
+          ? Number(valor.valorUnitario)
+          : 0;
         let porcentDescuento = valor.descuento ? valor.descuento : 0;
         let cantidadProducto = valor.cantidad ? valor.cantidad : 0;
         let precio = cantidadProducto * valorUnitario;
 
-        valor.valorDescuento = this.redondeoValor(precio * (porcentDescuento / 100));
+        valor.valorDescuento = this.redondeoValor(
+          precio * (porcentDescuento / 100)
+        );
         descuento += precio * (porcentDescuento / 100);
         subtotal += precio;
         cantidad += valor.cantidad ? valor.cantidad : 0;
         valor.precio = this.redondear(precio);
         valor.total = valor.precio;
-
       });
     }
 
     this.notaPedido.numeroProductosComprados = cantidad;
     this.detallesTransac = detalles;
     this.notaPedido.subTotal = this.redondear(subtotal);
-    this.notaPedido.iva = this.redondear((subtotal - descuento) * this.iva.valor);
+    this.notaPedido.iva = this.redondear(
+      (subtotal - descuento) * this.iva.valor
+    );
     this.notaPedido.descuento = this.redondear(descuento);
-    this.notaPedido.total = this.redondear((subtotal - descuento) + this.notaPedido.iva);
+    this.notaPedido.total = this.redondear(
+      subtotal - descuento + this.notaPedido.iva
+    );
   }
   guardarNotaPedido() {
     this.submittedNotaPedidoForm = true;
@@ -262,60 +299,74 @@ export class NotasPedidoComponent implements OnInit {
       return;
     }
     if (!this.notaPedido.user_id) {
-      this.mensaje = "Necesita encontrar un usuario para crear la nota de pedido";
+      this.mensaje =
+        "Necesita encontrar un usuario para crear la nota de pedido";
       this.abrirModal(this.mensajeModal);
       return;
     }
     this.calcularSubtotal();
     this.notaPedido.detalles = this.detallesTransac;
     if (this.notaPedido.id) {
-      this._notasPedidoService.actualizarNotaPedido(this.notaPedido).subscribe((info) => {
-        this.obtenerListaNotasPedido();
-        this.toggleSidebar('factura', '');
-        this.mensaje = "Nota de pedido actualizada con éxito";
-        this.abrirModal(this.mensajeModal);
-      }, (error) => {
-
-      });
+      this._notasPedidoService.actualizarNotaPedido(this.notaPedido).subscribe(
+        (info) => {
+          this.obtenerListaNotasPedido();
+          this.toggleSidebar("factura", "");
+          this.mensaje = "Nota de pedido actualizada con éxito";
+          this.abrirModal(this.mensajeModal);
+        },
+        (error) => {}
+      );
     } else {
-      this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe((info) => {
-        this.obtenerListaNotasPedido();
-        this.toggleSidebar('factura', '');
-        this.mensaje = "Nota de pedido creada con éxito";
-        this.abrirModal(this.mensajeModal);
-      }, (error) => {
-
-      });
+      this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe(
+        (info) => {
+          this.obtenerListaNotasPedido();
+          this.toggleSidebar("factura", "");
+          this.mensaje = "Nota de pedido creada con éxito";
+          this.abrirModal(this.mensajeModal);
+        },
+        (error) => {}
+      );
     }
-
   }
+
+  confirDatos() {
+    this.abrirModal(this.ConfirVent);
+  }
+
   redondear(num, decimales = 2) {
-    var signo = (num >= 0 ? 1 : -1);
+    var signo = num >= 0 ? 1 : -1;
     num = num * signo;
-    if (decimales === 0) //con 0 decimales
+    if (decimales === 0)
+      //con 0 decimales
       return signo * Math.round(num);
     // round(x * 10 ^ decimales)
-    num = num.toString().split('e');
-    num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimales) : decimales)));
+    num = num.toString().split("e");
+    num = Math.round(
+      +(num[0] + "e" + (num[1] ? +num[1] + decimales : decimales))
+    );
     // x * 10 ^ (-decimales)
-    num = num.toString().split('e');
-    let valor = signo * (Number)(num[0] + 'e' + (num[1] ? (+num[1] - decimales) : -decimales));
+    num = num.toString().split("e");
+    let valor =
+      signo *
+      Number(num[0] + "e" + (num[1] ? +num[1] - decimales : -decimales));
     return valor;
   }
   redondeoValor(valor) {
     return isNaN(valor) ? valor : parseFloat(valor).toFixed(2);
   }
   obtenerListaNotasPedido() {
-    this._notasPedidoService.obtenerListaNotasPedido({
-      page: this.page - 1,
-      page_size: this.page_size,
-      cedula: this.cedula,
-      nombresCompleto: this.nombresCompleto,
-      empresa_comercial: this.usuario.empresa._id
-    }).subscribe(info => {
-      this.listaNotasPedido = info.info;
-      this.collectionSize = info.cont;
-    });
+    this._notasPedidoService
+      .obtenerListaNotasPedido({
+        page: this.page - 1,
+        page_size: this.page_size,
+        cedula: this.cedula,
+        nombresCompleto: this.nombresCompleto,
+        empresa_comercial: this.usuario.empresa._id,
+      })
+      .subscribe((info) => {
+        this.listaNotasPedido = info.info;
+        this.collectionSize = info.cont;
+      });
   }
 
   iniciarPaginador() {
@@ -324,19 +375,24 @@ export class NotasPedidoComponent implements OnInit {
     });
   }
   obtenerTipoIdentificacionOpciones() {
-    this.paramService.obtenerListaPadres("TIPO_IDENTIFICACION").subscribe((info) => {
-      this.tipoIdentificacionOpciones = info;
-    });
+    this.paramService
+      .obtenerListaPadres("TIPO_IDENTIFICACION")
+      .subscribe((info) => {
+        this.tipoIdentificacionOpciones = info;
+      });
   }
   async obtenerIVA() {
-    await this.paramService.obtenerParametroNombreTipo("ACTIVO", "TIPO_IVA").subscribe((info) => {
-      this.iva = info;
-    },
-      (error) => {
-        this.mensaje = "Iva no configurado";
-        this.abrirModal(this.mensajeModal);
-      }
-    );
+    await this.paramService
+      .obtenerParametroNombreTipo("ACTIVO", "TIPO_IVA")
+      .subscribe(
+        (info) => {
+          this.iva = info;
+        },
+        (error) => {
+          this.mensaje = "Iva no configurado";
+          this.abrirModal(this.mensajeModal);
+        }
+      );
   }
   abrirModal(modal) {
     this.modalService.open(modal);
