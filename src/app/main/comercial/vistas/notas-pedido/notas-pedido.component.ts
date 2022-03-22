@@ -3,11 +3,20 @@ import { NotasPedidoService } from "./notas-pedido.service";
 import { NgbModal, NgbPagination } from "@ng-bootstrap/ng-bootstrap";
 import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
 import { repeaterAnimation } from "app/main/elementos/forms/form-repeater/form-repeater.animation";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { CoreMenuService } from "@core/components/core-menu/core-menu.service";
-import { Iva, NotaPedido } from "../../models/comercial";
+import { Credito, Iva, NotaPedido } from "../../models/comercial";
 import { ParametrizacionesService } from "app/main/center/parametrizaciones.service";
+import { CreditosService } from "app/main/creditos/creditos.service";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 
 @Component({
   selector: "app-notas-pedido",
@@ -19,12 +28,18 @@ import { ParametrizacionesService } from "app/main/center/parametrizaciones.serv
 })
 export class NotasPedidoComponent implements OnInit {
   @ViewChild("mensajeModal") mensajeModal;
+  @ViewChild("mensajeConfirModal") mensajeConfirModal;
   @ViewChild("ConfirVent") ConfirVent;
+  @ViewChild("ConfirVentCred") ConfirVentCred;
   @ViewChild(NgbPagination) paginator: NgbPagination;
   public confirmarDatosForm: FormGroup;
-
+  public confirmarDatosForm2: FormGroup;
+  codigos;
   public confirmarDatosSubmit = false;
+  public confirmarDatosSubmit2 = false;
   public mensaje;
+  public iscodeCLi = false;
+  public iscodeCorp = false;
   public submittedNotaPedidoForm = false;
   public page = 1;
   public page_size: any = 10;
@@ -34,6 +49,7 @@ export class NotasPedidoComponent implements OnInit {
   public items = [{ itemId: "", itemName: "", itemQuantity: "", itemCost: "" }];
   public notaPedidoForm: FormGroup;
   public notaPedido: NotaPedido;
+  public datosConfir: Credito;
   public usuario;
   public iva;
   public item = {
@@ -60,14 +76,20 @@ export class NotasPedidoComponent implements OnInit {
     private datePipe: DatePipe,
     private _coreMenuService: CoreMenuService,
     private paramService: ParametrizacionesService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _creditosService: CreditosService
   ) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+    this.codigos = { estado: "", codigoUsuario: "", codigoCorp: "" };
     this.usuario = this._coreMenuService.grpCorpUser;
     this.notaPedido = this.inicializarNotaPedido();
+
     this.notaPedido.nombreVendedor =
       this.usuario.persona.nombres + " " + this.usuario.persona.apellidos;
 
     this.iva = this.inicializarIva();
+    this.datosConfir = this.inicializarCredito();
   }
   inicializarNotaPedido(): NotaPedido {
     return {
@@ -94,6 +116,7 @@ export class NotasPedidoComponent implements OnInit {
       empresaComercial: this.usuario.empresa._id,
     };
   }
+
   ngOnInit(): void {
     this.notaPedidoForm = this._formBuilder.group({
       // fecha: ['', [Validators.required]],
@@ -108,17 +131,84 @@ export class NotasPedidoComponent implements OnInit {
       detalles: this._formBuilder.array([this.crearDetalleGrupo()]),
     });
 
-    this.confirmarDatosForm = this._formBuilder.group({
-      nroAutCli: ["", [Validators.required]],
-      nroAutCorp: ["", [Validators.required]],
-      nroFact: ["", [Validators.required]],
-      nroVenta: ["", [Validators.required]],
+    this.confirmarDatosForm = this._formBuilder.group(
+      {
+        nroAutCli: ["", [Validators.required]],
+        nroAutCliAux: [""],
+        nroAutCorp: ["", [Validators.required]],
+        nroAutCorpAux: [""],
+        nroFact: ["", [Validators.required]],
+        nroVenta: ["", [Validators.required]],
+      },
+      {
+        validator: [
+          this.compararCodigos("nroAutCli", "nroAutCliAux"),
+          this.compararCodigos2("nroAutCorp", "nroAutCorpAux"),
+        ],
+      }
+    );
+    this.confirmarDatosForm2 = this._formBuilder.group({
+      confir1: ["", [Validators.required, Validators.requiredTrue]],
+      confir2: ["", [Validators.required, Validators.requiredTrue]],
+      confir3: ["", [Validators.required, Validators.requiredTrue]],
+      confir4: ["", [Validators.required, Validators.requiredTrue]],
     });
     this.invoiceSelect = this.apiData;
     this.invoiceSelected = this.invoiceSelect;
     this.inicializarDetalles();
     this.obtenerIVA();
     this.obtenerTipoIdentificacionOpciones();
+  }
+  inicializarCredito(): Credito {
+    return {
+      numero: "",
+      correoCorp: "",
+      canal: "",
+      monto: "",
+      plazo: "",
+      aceptaTerminos: "",
+      estado: "",
+      user_id: "",
+      reporteBuro: "",
+      calificacionBuro: "",
+      buroValido: "",
+      identificacion: "",
+      ruc: "",
+      rolesPago: "",
+      panillaIESS: "",
+      tomarSolicitud: "",
+      fechaAprobacion: "",
+      tipoCredito: "",
+      concepto: "",
+      documentoAprobacion: "",
+      empresasAplican: "",
+      vigencia: "",
+      interes: "",
+      nombres: "",
+      apellidos: "",
+      nombresCompleto: "",
+      fechaAprobado: "",
+      numeroIdentificacion: "",
+      codigoCliente: "",
+      codigoCorp: "",
+      numeroFactura: "",
+      montoVenta: "",
+      checkPagare: "",
+      checkTablaAmortizacion: "",
+      checkManualPago: "",
+      checkCedula: "",
+      created_at: "",
+      updated_at: "",
+      state: "",
+      entidadFinanciera: "",
+      empresaIfis_id: "",
+      imagen: "",
+      empresaComercial_id: "",
+      whatsappPersona: "",
+      emailPersona: "",
+      telefono1: "",
+      nombreComercial: "",
+    };
   }
   inicializarIva(): Iva {
     return {
@@ -180,9 +270,213 @@ export class NotasPedidoComponent implements OnInit {
   get confrimacionForm() {
     return this.confirmarDatosForm.controls;
   }
+  get confrimacionForm2() {
+    return this.confirmarDatosForm2.controls;
+  }
+  compararCodigos2(nroAutCorp, nroAutCorpAux: string) {
+    return (group: FormGroup) => {
+      let nroAutCorpInput = group.controls[nroAutCorp];
+      let nroAutCorpInputAux = group.controls[nroAutCorpAux];
+
+      if (nroAutCorpInput.value !== nroAutCorpInputAux.value) {
+        return nroAutCorpInput.setErrors({
+          codigoCorp: {
+            valid: false,
+          },
+        });
+      }
+    };
+  }
+  compararCodigos(nroAutCli: string, nroAutCliAux: string) {
+    return (group: FormGroup) => {
+      let nroAutCliInput = group.controls[nroAutCli];
+      let nroAutCliInputAux = group.controls[nroAutCliAux];
+
+      if (nroAutCliInput.value !== nroAutCliInputAux.value) {
+        return nroAutCliInput.setErrors({
+          codigoUsuario: {
+            valid: false,
+          },
+        });
+      }
+    };
+  }
+  generatePdf(action = "open", Documentpdf) {
+    const getDocument =
+      Documentpdf == "pagare"
+        ? this.getDocumentPagare()
+        : this.getDocumentTblAmortizacion();
+
+    switch (action) {
+      case "open":
+        pdfMake.createPdf(getDocument).open();
+        break;
+      case "print":
+        pdfMake.createPdf(getDocument).print();
+        break;
+      case "download":
+        pdfMake.createPdf(getDocument).download();
+        break;
+
+      default:
+        pdfMake.createPdf(getDocument).open();
+        break;
+    }
+  }
+
+  getDocumentPagare() {
+    return {
+      content: [
+        {
+          text: "Pagaré",
+          bold: true,
+          fontSize: 20,
+          alignment: "center",
+          margin: [0, 0, 0, 20],
+        },
+        {
+          columns: [
+            [
+              {
+                text: "WhatsApp: " + this.datosConfir.whatsappPersona,
+                style: "name",
+              },
+              {
+                text: "Nombres: " + this.datosConfir.nombres,
+              },
+              {
+                text: "Apellidos: " + this.datosConfir.apellidos,
+              },
+              {
+                text: "Tipo Crédito:  " + this.datosConfir.tipoCredito,
+              },
+            ],
+          ],
+        },
+        {
+          text: "Skills",
+          style: "header",
+        },
+      ],
+      info: {
+        title: "_RESUME",
+        author: "this.resume.name",
+        subject: "RESUME",
+        keywords: "RESUME, ONLINE RESUME",
+      },
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10],
+          decoration: "underline",
+        },
+        name: {
+          fontSize: 16,
+          bold: true,
+        },
+        jobTitle: {
+          fontSize: 14,
+          bold: true,
+          italics: true,
+        },
+        sign: {
+          margin: [0, 50, 0, 10],
+          alignment: "right",
+          italics: true,
+        },
+        tableHeader: {
+          bold: true,
+        },
+      },
+    };
+  }
+  getDocumentTblAmortizacion() {
+    return {
+      content: [
+        {
+          text: "Tabla Amortización",
+          bold: true,
+          fontSize: 20,
+          alignment: "center",
+          margin: [0, 0, 0, 20],
+        },
+        {
+          columns: [
+            [
+              {
+                text: "WhatsApp: " + this.datosConfir.whatsappPersona,
+                style: "name",
+              },
+              {
+                text: "Nombres: " + this.datosConfir.nombres,
+              },
+              {
+                text: "Apellidos: " + this.datosConfir.apellidos,
+              },
+              {
+                text: "Tipo Crédito:  " + this.datosConfir.tipoCredito,
+              },
+            ],
+          ],
+        },
+        {
+          text: "Skills",
+          style: "header",
+        },
+      ],
+      info: {
+        title: "_RESUME",
+        author: "this.resume.name",
+        subject: "RESUME",
+        keywords: "RESUME, ONLINE RESUME",
+      },
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10],
+          decoration: "underline",
+        },
+        name: {
+          fontSize: 16,
+          bold: true,
+        },
+        jobTitle: {
+          fontSize: 14,
+          bold: true,
+          italics: true,
+        },
+        sign: {
+          margin: [0, 50, 0, 10],
+          alignment: "right",
+          italics: true,
+        },
+        tableHeader: {
+          bold: true,
+        },
+      },
+    };
+  }
 
   enviarMonto() {
     this.confirmarDatosSubmit = true;
+    if (this.confirmarDatosForm.invalid) {
+      return;
+    }
+
+    this.cerrarModal();
+    this.abrirModal(this.ConfirVentCred);
+  }
+
+  confirmar() {
+    this.confirmarDatosSubmit2 = true;
+
+    if (this.confirmarDatosForm2.invalid) {
+      return;
+    }
+    this.cerrarModal();
+    this.abrirModal(this.mensajeConfirModal);
   }
 
   toggleSidebar(name, id): void {
@@ -256,6 +550,7 @@ export class NotasPedidoComponent implements OnInit {
     //   }
     // }
   }
+
   calcularSubtotal() {
     let detalles = this.detalles;
     let subtotal = 0;
@@ -329,7 +624,35 @@ export class NotasPedidoComponent implements OnInit {
     }
   }
 
-  confirDatos() {
+  confirDatos(credito) {
+    this._creditosService.obtenerCredito(credito).subscribe(
+      (info) => {
+        this.datosConfir = info;
+        this._notasPedidoService
+          .generarCodigo({
+            _id: credito,
+            user_id: this.datosConfir.user_id,
+            empresaComercial_id: this.datosConfir.empresaComercial_id,
+          })
+          .subscribe(
+            (info) => {
+              this.confirmarDatosForm.controls["nroAutCliAux"].setValue(
+                info.codigoUsuario
+              );
+              this.confirmarDatosForm.controls["nroAutCorpAux"].setValue(
+                info.codigoCorp
+              );
+              this.codigos = info;
+              console.log("Codigos: ", info);
+
+              //this.datosConfir = info;
+            },
+            (error) => {}
+          );
+      },
+      (error) => {}
+    );
+
     this.abrirModal(this.ConfirVent);
   }
 

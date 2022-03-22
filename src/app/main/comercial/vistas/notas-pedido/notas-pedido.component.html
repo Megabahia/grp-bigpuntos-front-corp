@@ -89,8 +89,8 @@
                     <i data-feather='edit-2'></i>
                   </div>
                 </a>
-                <a href="javascript:void(0)" (click)="confirDatos()" class="avatar bg-info " data-target="#enviar"
-                  data-toggle="modal">
+                <a href="javascript:void(0)" (click)="confirDatos(nota.credito)" class="avatar bg-info "
+                  data-target="#enviar" data-toggle="modal">
                   <div class="avatar-content" data-toggle="tooltip" data-placement="bottom" title=""
                     data-original-title="Enviar a sistema de ofertas">
                     <i data-feather='send'></i>
@@ -467,6 +467,29 @@
   </div>
 </core-sidebar>
 
+<ng-template #mensajeConfirModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-center" id="exampleModalCenterTitle">Confirmación de Venta de Crédito</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <p>
+      El crédito de Número XXXXXX ha sido procesado con éxito, en los próximos x días será procesado y acreditado a la
+      cuenta xxx de la Corp.
+    </p>
+    <br>
+    <p>
+      Recuerde que debe enviar los Habilitantes de crédito con el número XXXX previo a ser acreditado el dinero en la
+      ceunta de la Corp
+    </p>
+  </div>
+  <div class="text-center">
+    <button type="button" class="btn btn-light" (click)="cerrarModal()">Listo</button>
+  </div>
+</ng-template>
+
 <ng-template #mensajeModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
@@ -482,6 +505,7 @@
   </div>
 </ng-template>
 
+
 <ng-template #ConfirVent let-modal>
   <div class="modal-header">
 
@@ -494,13 +518,18 @@
     <form class="add-new-user modal-content pt-0" [formGroup]="confirmarDatosForm">
 
       <div class="modal-header mb-1">
-        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Confirmación </h5>
       </div>
       <div class="modal-body flex-grow-1">
 
         <div class="form-group">
-          <label>Ingreso número de autorización del Cliente (código enviado a WhatsApp del Cliente y al correo)</label>
+          <label>Ingreso número de autorización del Cliente (código enviado a {{this.datosConfir.whatsappPersona}}
+            WhatsApp del
+            Cliente y al correo {{this.datosConfir.emailPersona}})</label>
           <input formControlName="nroAutCli" class="form-control" name="nombreTienda" type="text">
+        </div>
+        <div class="field-message" *ngIf="confrimacionForm.nroAutCli.errors?.codigoUsuario">
+          Codigo Invalido.
         </div>
         <div *ngIf="confirmarDatosSubmit && confrimacionForm.nroAutCli.errors" class="invalid-feedback"
           style="display: block;">
@@ -508,9 +537,16 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Ingreso número de autorización de la Corp (código enviado a WhatsApp de la Corpxxx123 y al correo:
+          <label>Ingreso número de autorización de la Corp (código enviado a {{this.datosConfir.telefono1}} WhatsApp
+            de
+            la
+            {{this.datosConfir.nombreComercial}}y al correo:
+            {{this.datosConfir.correoCorp}}
             )</label>
           <input formControlName="nroAutCorp" class="form-control" name="nombreTienda" type="text">
+        </div>
+        <div class="field-message" *ngIf="confrimacionForm.nroAutCorp.errors?.codigoCorp">
+          Codigo Invalido.
         </div>
         <div *ngIf="confirmarDatosSubmit && confrimacionForm.nroAutCorp.errors" class="invalid-feedback"
           style="display: block;">
@@ -522,13 +558,14 @@
           <label>Número de Facatura:</label>
           <input formControlName="nroFact" class="form-control" name="nombreTienda" type="text">
         </div>
+
         <div *ngIf="confirmarDatosSubmit && confrimacionForm.nroFact.errors" class="invalid-feedback"
           style="display: block;">
           <div *ngIf="confrimacionForm.nroFact.errors.required"> requerido
           </div>
         </div>
         <div class="form-group">
-          <label>Número de Venta:</label>
+          <label>Monto de Venta:</label>
           <input formControlName="nroVenta" class="form-control" name="nombreTienda" type="text">
         </div>
         <div *ngIf="confirmarDatosSubmit && confrimacionForm.nroVenta.errors" class="invalid-feedback"
@@ -539,6 +576,98 @@
       </div>
 
       <button (click)="enviarMonto()" class="btn btn-outline-secondary" data-dismiss="modal">Confirmar Datos</button>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+
+  </div>
+</ng-template>
+
+
+
+<ng-template #ConfirVentCred let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+
+    <form class="add-new-user modal-content pt-0" [formGroup]="confirmarDatosForm2">
+
+      <div class="modal-header mb-1">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmación de venta con Crédito</h5>
+      </div>
+      <div class="modal-body flex-grow-1">
+        <table mdbTable>
+          <thead class="black white-text">
+            <tr>
+              <th>Habilitante </th>
+              <th>Acción</th>
+              <th>Confirmar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pagaré del credito de frima de Cliente <a (click)="generatePdf('open','pagare')">Pdf</a></td>
+              <td>El cliente debe firmar</td>
+              <td>
+                <input formControlName="confir1" type="checkbox" name="miCheck">
+                <div *ngIf="confirmarDatosSubmit2 && confrimacionForm2.confir1.errors" class="invalid-feedback"
+                  style="display: block;">
+                  <div *ngIf="confrimacionForm2.confir1.errors.required"> requerido
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Tabla de Amortización para Firmar de cliente <a (click)="generatePdf('open','')">Tabla.Pdf</a> </td>
+              <td>El cliente debe firmar</td>
+              <td>
+                <input formControlName="confir2" type="checkbox" name="miCheck">
+                <div *ngIf="confirmarDatosSubmit2 && confrimacionForm2.confir2.errors" class="invalid-feedback"
+                  style="display: block;">
+                  <div *ngIf="confrimacionForm2.confir2.errors.required"> requerido
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Manual para Pago del crédito</td>
+              <td>Entregar al cliente impreso</td>
+              <td>
+                <input formControlName="confir3" type="checkbox" name="miCheck">
+                <div *ngIf="confirmarDatosSubmit2 && confrimacionForm2.confir3.errors" class="invalid-feedback"
+                  style="display: block;">
+                  <div *ngIf="confrimacionForm2.confir3.errors.required"> requerido
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Cédula del Cliente</td>
+              <td>Sacar copia de la cédula del Cliente</td>
+              <td>
+                <input formControlName="confir4" type="checkbox" name="miCheck">
+                <div *ngIf="confirmarDatosSubmit2 && confrimacionForm2.confir4.errors" class="invalid-feedback"
+                  style="display: block;">
+                  <div *ngIf="confrimacionForm2.confir4.errors.required"> requerido
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+
+
+
+      </div>
+
+      <button (click)="confirmar()" class="btn btn-outline-secondary" data-dismiss="modal">Confirmar </button>
     </form>
   </div>
 
