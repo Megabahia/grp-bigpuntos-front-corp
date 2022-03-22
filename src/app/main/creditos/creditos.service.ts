@@ -20,7 +20,7 @@ export class CreditosService {
   }
   actualizarCreditos(datos) {
     return this._httpClient.post<any>(
-      `${environment.apiUrl}/corp/creditoPersonas/update/${datos.get("id")}`,
+      `${environment.apiUrl}/corp/creditoPersonas/update/${datos.id}`,
       datos
     );
   }

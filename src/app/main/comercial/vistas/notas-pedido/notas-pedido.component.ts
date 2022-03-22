@@ -68,6 +68,7 @@ export class NotasPedidoComponent implements OnInit {
   public listaNotasPedido: [] = [];
   public nombresCompleto: string = "";
   public cedula: string = "";
+  credito_id: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -138,7 +139,15 @@ export class NotasPedidoComponent implements OnInit {
         nroAutCorp: ["", [Validators.required]],
         nroAutCorpAux: [""],
         nroFact: ["", [Validators.required]],
-        nroVenta: ["", [Validators.required]],
+        nroVenta: [
+          "",
+          [
+            Validators.required,
+            Validators.pattern("[0-9]+([,.][0-9]{1,2})?"),
+            //Validators.pattern(this.numRegex),
+            Validators.min(1),
+          ],
+        ],
       },
       {
         validator: [
@@ -223,7 +232,7 @@ export class NotasPedidoComponent implements OnInit {
       valor: 0,
     };
   }
-  inicializarDetalle() {
+  inicializarDetalle(facturaEncabezado_id?) {
     return {
       id: 0,
       articulo: "",
@@ -235,6 +244,7 @@ export class NotasPedidoComponent implements OnInit {
       descuento: 0,
       impuesto: 0,
       valorDescuento: 0,
+      facturaEncabezado: facturaEncabezado_id ? facturaEncabezado_id : 0,
     };
   }
   crearDetalleGrupo() {
@@ -254,6 +264,7 @@ export class NotasPedidoComponent implements OnInit {
       informacionAdicional: ["", [Validators.required]],
       descuento: [0, [Validators.required, Validators.pattern(this.numRegex)]],
       valorDescuento: [0, [Validators.required]],
+      facturaEncabezado: [0, [Validators.required]],
     });
   }
   transformarFecha(fecha) {
@@ -465,8 +476,21 @@ export class NotasPedidoComponent implements OnInit {
       return;
     }
 
-    this.cerrarModal();
-    this.abrirModal(this.ConfirVentCred);
+    this._creditosService
+      .actualizarCreditos({
+        id: this.credito_id,
+        codigoCliente: this.confirmarDatosForm.get("nroAutCli").value,
+        codigoCorp: this.confirmarDatosForm.get("nroAutCorp").value,
+        numeroFactura: this.confirmarDatosForm.get("nroFact").value,
+        montoVenta: this.confirmarDatosForm.get("nroVenta").value,
+      })
+      .subscribe(
+        (info) => {
+          this.cerrarModal();
+          this.abrirModal(this.ConfirVentCred);
+        },
+        (error) => {}
+      );
   }
 
   confirmar() {
@@ -475,8 +499,22 @@ export class NotasPedidoComponent implements OnInit {
     if (this.confirmarDatosForm2.invalid) {
       return;
     }
-    this.cerrarModal();
-    this.abrirModal(this.mensajeConfirModal);
+
+    this._creditosService
+      .actualizarCreditos({
+        id: this.credito_id,
+        checkPagare: this.confirmarDatosForm2.get("confir1").value,
+        checkTablaAmortizacion: this.confirmarDatosForm2.get("confir2").value,
+        checkManualPago: this.confirmarDatosForm2.get("confir3").value,
+        checkCedual: this.confirmarDatosForm2.get("confir4").value,
+      })
+      .subscribe(
+        (info) => {
+          this.cerrarModal();
+          this.abrirModal(this.mensajeConfirModal);
+        },
+        (error) => {}
+      );
   }
 
   toggleSidebar(name, id): void {
@@ -535,8 +573,10 @@ export class NotasPedidoComponent implements OnInit {
     this.detalles.push(this.inicializarDetalle());
   }
   addItem() {
-    this.detalles.push(this.inicializarDetalle());
+    this.detalles.push(this.inicializarDetalle(this.notaPedido.id));
+
     let detGrupo = this.crearDetalleGrupo();
+    detGrupo.controls["facturaEncabezado"].setValue(this.notaPedido.id);
     this.detallesArray.push(detGrupo);
   }
   deleteItem(i) {
@@ -601,7 +641,11 @@ export class NotasPedidoComponent implements OnInit {
     }
     this.calcularSubtotal();
     this.notaPedido.detalles = this.detallesTransac;
+    console.log(this.detallesTransac);
+
     if (this.notaPedido.id) {
+      console.log(this.notaPedido);
+
       this._notasPedidoService.actualizarNotaPedido(this.notaPedido).subscribe(
         (info) => {
           this.obtenerListaNotasPedido();
@@ -623,11 +667,22 @@ export class NotasPedidoComponent implements OnInit {
       );
     }
   }
+  oculatrCorreo(correo) {
+    return (
+      "xxxxxxxx" +
+      correo.substring(correo.toString().indexOf("@") - 4, correo.length)
+    );
+  }
+  oculatrTelefono(numero) {
+    return "xxxx" + numero.substring(6, numero.length);
+  }
 
   confirDatos(credito) {
+    this.credito_id = credito;
     this._creditosService.obtenerCredito(credito).subscribe(
       (info) => {
         this.datosConfir = info;
+
         this._notasPedidoService
           .generarCodigo({
             _id: credito,
@@ -718,7 +773,10 @@ export class NotasPedidoComponent implements OnInit {
       );
   }
   abrirModal(modal) {
-    this.modalService.open(modal);
+    this.modalService.open(modal, {
+      backdrop: false,
+      centered: true,
+    });
   }
   cerrarModal() {
     this.modalService.dismissAll();
