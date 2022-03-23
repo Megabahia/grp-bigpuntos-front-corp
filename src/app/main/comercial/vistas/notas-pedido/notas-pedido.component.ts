@@ -527,6 +527,10 @@ export class NotasPedidoComponent implements OnInit {
         (info) => {
           this.notaPedido = info;
           this.detalles = info.detalles;
+          // Vaciar array de los controles
+          let control = this.notaPedidoForm.controls.detalles as FormArray;          
+          control.controls = [];
+          // Iniciar los arrays de los detalles que se devuelve del back
           for (const detalle of info.detalles) {
             this.crearDetalleGrupo(detalle)
           }
@@ -633,6 +637,7 @@ export class NotasPedidoComponent implements OnInit {
   guardarNotaPedido() {
     this.submittedNotaPedidoForm = true;
 
+    console.log(this.notaPedidoForm)
     if (this.notaPedidoForm.invalid) {
       return;
     }
