@@ -129,8 +129,9 @@ export class NotasPedidoComponent implements OnInit {
       correo: ["", [Validators.required]],
       nombreVendedor: ["", [Validators.required]],
       // canal: ['', [Validators.required]],
-      detalles: this._formBuilder.array([this.crearDetalleGrupo()]),
+      detalles: this._formBuilder.array([]),
     });
+    this.crearDetalleGrupo()
 
     this.confirmarDatosForm = this._formBuilder.group(
       {
@@ -247,25 +248,26 @@ export class NotasPedidoComponent implements OnInit {
       facturaEncabezado: facturaEncabezado_id ? facturaEncabezado_id : 0,
     };
   }
-  crearDetalleGrupo() {
-    return this._formBuilder.group({
+  crearDetalleGrupo(detalle?) {
+    let control = this.notaPedidoForm.controls.detalles as FormArray;
+    control.push(this._formBuilder.group({
       // codigo: ['', [Validators.required]],
-      articulo: ["", [Validators.required]],
-      valorUnitario: [0, [Validators.required]],
+      articulo: [detalle?.articulo || '', [Validators.required]],
+      valorUnitario: [detalle?.valorUnitario || 0, [Validators.required]],
       cantidad: [
-        0,
+        detalle?.cantidad || 0,
         [
           Validators.required,
           Validators.pattern("^[0-9]*$"),
           Validators.min(1),
         ],
       ],
-      precio: [0, [Validators.required]],
-      informacionAdicional: ["", [Validators.required]],
-      descuento: [0, [Validators.required, Validators.pattern(this.numRegex)]],
-      valorDescuento: [0, [Validators.required]],
-      facturaEncabezado: [0, [Validators.required]],
-    });
+      precio: [detalle?.precio || 0, [Validators.required]],
+      informacionAdicional: [detalle?.informacionAdicional || '', [Validators.required]],
+      descuento: [detalle?.descuento || 0, [Validators.required, Validators.pattern(this.numRegex)]],
+      valorDescuento: [detalle?.valorDescuento || 0, [Validators.required]],
+      facturaEncabezado: [detalle?.facturaEncabezado || 0, [Validators.required]],
+    }));
   }
   transformarFecha(fecha) {
     let nuevaFecha = this.datePipe.transform(fecha, "yyyy-MM-dd");
@@ -513,7 +515,7 @@ export class NotasPedidoComponent implements OnInit {
           this.cerrarModal();
           this.abrirModal(this.mensajeConfirModal);
         },
-        (error) => {}
+        (error) => { }
       );
   }
 
@@ -525,6 +527,9 @@ export class NotasPedidoComponent implements OnInit {
         (info) => {
           this.notaPedido = info;
           this.detalles = info.detalles;
+          for (const detalle of info.detalles) {
+            this.crearDetalleGrupo(detalle)
+          }
         },
         (error) => {}
       );
@@ -575,9 +580,7 @@ export class NotasPedidoComponent implements OnInit {
   addItem() {
     this.detalles.push(this.inicializarDetalle(this.notaPedido.id));
 
-    let detGrupo = this.crearDetalleGrupo();
-    detGrupo.controls["facturaEncabezado"].setValue(this.notaPedido.id);
-    this.detallesArray.push(detGrupo);
+    this.crearDetalleGrupo({facturaEncabezado: this.notaPedido.id});
   }
   deleteItem(i) {
     this.detalles.splice(i, 1);
