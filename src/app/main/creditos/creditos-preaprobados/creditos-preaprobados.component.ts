@@ -19,6 +19,7 @@ import { Router } from "@angular/router";
 })
 export class CreditosPreaprobadosComponent implements OnInit {
   @ViewChild("mensajeModal") mensajeModal;
+  @ViewChild("mensajeAfirmacionl") mensajeAfirmacionl;
   public page = 1;
   public page_size: any = 10;
   public collectionSize;
@@ -178,6 +179,25 @@ export class CreditosPreaprobadosComponent implements OnInit {
       valor: 0,
     };
   }
+  confirmarPedido(afirm) {
+    if (afirm) {
+      this.cerrarModal();
+      this.calcularSubtotal();
+      this.notaPedido.detalles = this.detallesTransac;
+      this.notaPedido.credito = this.creditoSelecionado._id;
+      this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe(
+        (info) => {
+          this.toggleSidebar("factura", "");
+          this.cerrarModal();
+          this._router.navigate(["/comercial/notas-pedido"]);
+          /*         this.mensaje = "Nota de pedido creada con éxito";
+        this.abrirModal(this.mensajeModal);
+ */
+        },
+        (error) => {}
+      );
+    } else return;
+  }
   guardarNotaPedido() {
     this.submittedNotaPedidoForm = true;
 
@@ -190,20 +210,7 @@ export class CreditosPreaprobadosComponent implements OnInit {
       // this.abrirModal(this.mensajeModal);
       return;
     }
-    this.calcularSubtotal();
-    this.notaPedido.detalles = this.detallesTransac;
-    this.notaPedido.credito = this.creditoSelecionado._id;
-    this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe(
-      (info) => {
-        this.toggleSidebar("factura", "");
-        this.cerrarModal();
-        this._router.navigate(["/comercial/notas-pedido"]);
-        /*         this.mensaje = "Nota de pedido creada con éxito";
-        this.abrirModal(this.mensajeModal);
- */
-      },
-      (error) => {}
-    );
+    this.abrirModal(this.mensajeAfirmacionl);
   }
 
   get detallesArray(): FormArray {

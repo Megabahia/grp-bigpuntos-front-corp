@@ -28,6 +28,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 })
 export class NotasPedidoComponent implements OnInit {
   @ViewChild("mensajeModal") mensajeModal;
+  @ViewChild("mensajeAfirmacionl") mensajeAfirmacionl;
   @ViewChild("mensajeConfirModal") mensajeConfirModal;
   @ViewChild("ConfirVent") ConfirVent;
   @ViewChild("ConfirVentCred") ConfirVentCred;
@@ -39,6 +40,7 @@ export class NotasPedidoComponent implements OnInit {
   public confirmarDatosSubmit2 = false;
   public mensaje;
   public iscodeCLi = false;
+  public confirmacionGuardarpedido = false;
   public iscodeCorp = false;
   public submittedNotaPedidoForm = false;
   public page = 1;
@@ -131,7 +133,7 @@ export class NotasPedidoComponent implements OnInit {
       // canal: ['', [Validators.required]],
       detalles: this._formBuilder.array([]),
     });
-    this.crearDetalleGrupo()
+    this.crearDetalleGrupo();
 
     this.confirmarDatosForm = this._formBuilder.group(
       {
@@ -250,24 +252,35 @@ export class NotasPedidoComponent implements OnInit {
   }
   crearDetalleGrupo(detalle?) {
     let control = this.notaPedidoForm.controls.detalles as FormArray;
-    control.push(this._formBuilder.group({
-      // codigo: ['', [Validators.required]],
-      articulo: [detalle?.articulo || '', [Validators.required]],
-      valorUnitario: [detalle?.valorUnitario || 0, [Validators.required]],
-      cantidad: [
-        detalle?.cantidad || 0,
-        [
-          Validators.required,
-          Validators.pattern("^[0-9]*$"),
-          Validators.min(1),
+    control.push(
+      this._formBuilder.group({
+        // codigo: ['', [Validators.required]],
+        articulo: [detalle?.articulo || "", [Validators.required]],
+        valorUnitario: [detalle?.valorUnitario || 0, [Validators.required]],
+        cantidad: [
+          detalle?.cantidad || 0,
+          [
+            Validators.required,
+            Validators.pattern("^[0-9]*$"),
+            Validators.min(1),
+          ],
         ],
-      ],
-      precio: [detalle?.precio || 0, [Validators.required]],
-      informacionAdicional: [detalle?.informacionAdicional || '', [Validators.required]],
-      descuento: [detalle?.descuento || 0, [Validators.required, Validators.pattern(this.numRegex)]],
-      valorDescuento: [detalle?.valorDescuento || 0, [Validators.required]],
-      facturaEncabezado: [detalle?.facturaEncabezado || 0, [Validators.required]],
-    }));
+        precio: [detalle?.precio || 0, [Validators.required]],
+        informacionAdicional: [
+          detalle?.informacionAdicional || "",
+          [Validators.required],
+        ],
+        descuento: [
+          detalle?.descuento || 0,
+          [Validators.required, Validators.pattern(this.numRegex)],
+        ],
+        valorDescuento: [detalle?.valorDescuento || 0, [Validators.required]],
+        facturaEncabezado: [
+          detalle?.facturaEncabezado || 0,
+          [Validators.required],
+        ],
+      })
+    );
   }
   transformarFecha(fecha) {
     let nuevaFecha = this.datePipe.transform(fecha, "yyyy-MM-dd");
@@ -515,7 +528,7 @@ export class NotasPedidoComponent implements OnInit {
           this.cerrarModal();
           this.abrirModal(this.mensajeConfirModal);
         },
-        (error) => { }
+        (error) => {}
       );
   }
 
@@ -528,11 +541,11 @@ export class NotasPedidoComponent implements OnInit {
           this.notaPedido = info;
           this.detalles = info.detalles;
           // Vaciar array de los controles
-          let control = this.notaPedidoForm.controls.detalles as FormArray;          
+          let control = this.notaPedidoForm.controls.detalles as FormArray;
           control.controls = [];
           // Iniciar los arrays de los detalles que se devuelve del back
           for (const detalle of info.detalles) {
-            this.crearDetalleGrupo(detalle)
+            this.crearDetalleGrupo(detalle);
           }
         },
         (error) => {}
@@ -584,7 +597,7 @@ export class NotasPedidoComponent implements OnInit {
   addItem() {
     this.detalles.push(this.inicializarDetalle(this.notaPedido.id));
 
-    this.crearDetalleGrupo({facturaEncabezado: this.notaPedido.id});
+    this.crearDetalleGrupo({ facturaEncabezado: this.notaPedido.id });
   }
   deleteItem(i) {
     this.detalles.splice(i, 1);
@@ -634,10 +647,43 @@ export class NotasPedidoComponent implements OnInit {
       subtotal - descuento + this.notaPedido.iva
     );
   }
+
+  confirmarPedido(afirm) {
+    if (afirm) {
+      this.cerrarModal();
+      this.calcularSubtotal();
+      this.notaPedido.detalles = this.detallesTransac;
+      console.log(this.detallesTransac);
+
+      if (this.notaPedido.id) {
+        console.log(this.notaPedido);
+
+        this._notasPedidoService
+          .actualizarNotaPedido(this.notaPedido)
+          .subscribe(
+            (info) => {
+              this.obtenerListaNotasPedido();
+              this.toggleSidebar("factura", "");
+              this.mensaje = "Nota de pedido actualizada con éxito";
+              this.abrirModal(this.mensajeModal);
+            },
+            (error) => {}
+          );
+      } else {
+        this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe(
+          (info) => {
+            this.obtenerListaNotasPedido();
+            this.toggleSidebar("factura", "");
+            this.mensaje = "Nota de pedido creada con éxito";
+            this.abrirModal(this.mensajeModal);
+          },
+          (error) => {}
+        );
+      }
+    } else return;
+  }
   guardarNotaPedido() {
     this.submittedNotaPedidoForm = true;
-
-    console.log(this.notaPedidoForm)
     if (this.notaPedidoForm.invalid) {
       return;
     }
@@ -647,33 +693,8 @@ export class NotasPedidoComponent implements OnInit {
       this.abrirModal(this.mensajeModal);
       return;
     }
-    this.calcularSubtotal();
-    this.notaPedido.detalles = this.detallesTransac;
-    console.log(this.detallesTransac);
 
-    if (this.notaPedido.id) {
-      console.log(this.notaPedido);
-
-      this._notasPedidoService.actualizarNotaPedido(this.notaPedido).subscribe(
-        (info) => {
-          this.obtenerListaNotasPedido();
-          this.toggleSidebar("factura", "");
-          this.mensaje = "Nota de pedido actualizada con éxito";
-          this.abrirModal(this.mensajeModal);
-        },
-        (error) => {}
-      );
-    } else {
-      this._notasPedidoService.crearNotaPedido(this.notaPedido).subscribe(
-        (info) => {
-          this.obtenerListaNotasPedido();
-          this.toggleSidebar("factura", "");
-          this.mensaje = "Nota de pedido creada con éxito";
-          this.abrirModal(this.mensajeModal);
-        },
-        (error) => {}
-      );
-    }
+    this.abrirModal(this.mensajeAfirmacionl);
   }
   oculatrCorreo(correo) {
     return (
@@ -786,6 +807,7 @@ export class NotasPedidoComponent implements OnInit {
       centered: true,
     });
   }
+
   cerrarModal() {
     this.modalService.dismissAll();
   }
