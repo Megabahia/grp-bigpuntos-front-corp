@@ -22,21 +22,21 @@ const routes = [
   {
     path: 'inicio',
     component: PrincipalComponent,
-    // data: { roles: [Role.SuperMonedas] },
+    // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
   {
     path: 'solicitudes-de-credito',
     component: SolicitudesComponent,
-    // data: { roles: [Role.SuperMonedas] },
+    // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
   {
     path: 'notas-pedido',
     component: NotasPedidoComponent ,
-    // data: { roles: [Role.SuperMonedas] },
+    // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },

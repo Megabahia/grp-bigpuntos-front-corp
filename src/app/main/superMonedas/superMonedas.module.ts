@@ -25,21 +25,21 @@ const routes = [
   {
     path: 'inicio',
     component: PrincipalComponent,
-    // data: { roles: [Role.SuperMonedas] },
+    // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
   {
     path: 'cobrar',
     component: CobrarComponent,
-    // data: { roles: [Role.SuperMonedas] },
+    // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
   {
     path: 'reporteCobros',
     component: ReporteCobrosComponent,
-    // data: { roles: [Role.SuperMonedas] },
+    // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },

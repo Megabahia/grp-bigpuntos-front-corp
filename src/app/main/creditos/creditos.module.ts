@@ -22,7 +22,7 @@ const routes = [
   {
     path: 'creditosPreAprobados',
     component: CreditosPreaprobadosComponent,
-    // data: { roles: [Role.SuperMonedas] },
+    // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
