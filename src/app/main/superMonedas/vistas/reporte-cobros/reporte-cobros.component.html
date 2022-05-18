@@ -3,7 +3,7 @@
         <div class="col-12 mb-2">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="content-header-title float-left mb-0">Reporte de Cobros con Supermonedas</h2>
+                    <h2 class="content-header-title float-left mb-0">Reporte de Cobros con BP</h2>
                 </div>
             </div>
         </div>
@@ -42,13 +42,13 @@
                                         <label class="custom-control-label" for="customCheck2"></label>
                                     </div>
                                 </th>
-                                <th>Fecha cobro</th>
-                                <th>Monto factura</th>
-                                <th>Numero factura</th>
-                                <th>Monto cobrado con Supermonedas</th>
-                                <th>Nombre cliente</th>
-                                <th>Cédula</th>
-                                <th>WhatsApp</th>
+                                <th>Fecha de cobro</th>
+                                <th>Numero de factura</th>
+                                <th>Monto de factura</th>
+                                <th>Monto en BP</th>
+                                <th>Nombre del cliente</th>
+                                <th>Identificación del cliente</th>
+                                <th>Correo del cliente</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,13 +59,13 @@
                                         <label class="custom-control-label" for="customCheck2"></label>
                                     </div>
                                 </td>
-                                <td>{{transformarFecha(cobro.fechaCobro)}}</td>
+                                <td>{{transformarFecha(cobro.created_at)}}</td>
+                                <td>{{cobro._id}}</td>
                                 <td>{{cobro.montoTotalFactura}}</td>
-                                <td>{{cobro.numeroFactura}}</td>
                                 <td>{{cobro.montoSupermonedas}}</td>
-                                <td>{{cobro.nombreCompleto}}</td>
+                                <td>{{cobro.nombres}} {{cobro.apellidos}}</td>
                                 <td>{{cobro.identificacion}}</td>
-                                <td>{{cobro.whatsapp}}</td>
+                                <td>{{cobro.email}}</td>
                             </tr>
                         </tbody>
                     </table>

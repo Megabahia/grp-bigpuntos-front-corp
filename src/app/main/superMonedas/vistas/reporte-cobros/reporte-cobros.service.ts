@@ -9,7 +9,7 @@ export class ReporteCobrosService {
 
   constructor(private _httpClient: HttpClient) { }
 
-  obtenerCobros(datos) {
-    return this._httpClient.post<any>(`${environment.apiUrl}/corp/monedasEmpresa/list/`, datos);
+  obtenerListaPagos(datos) {
+    return this._httpClient.post<any>(`${environment.apiUrl}/corp/movimientoCobros/reporte/empresas/`, datos);
   }
 }
