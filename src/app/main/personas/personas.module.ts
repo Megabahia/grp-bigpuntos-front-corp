@@ -43,7 +43,7 @@ const routes = [
     // data: { animation: 'auth' }
   },
   {
-    path: 'supermonedas',
+    path: 'bigpuntos',
     children: [
       { path: '', redirectTo: 'mis-monedas', pathMatch: 'full' },
       {

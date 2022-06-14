@@ -33,7 +33,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'solicitarCreditos',
@@ -41,7 +41,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'confirmarAutorizacion',
@@ -49,7 +49,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'aprobacionSolicitud',
@@ -57,7 +57,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'registroCreditos',
@@ -65,7 +65,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
         ]
       },
@@ -82,7 +82,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'appLineaProv',
@@ -90,7 +90,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'appLineaNom',
@@ -98,7 +98,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'consultaLineas',
@@ -106,13 +106,13 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
         ]
       },
       {
         id: 'suoerMonedas',
-        title: 'Super monedas',
+        title: 'Big Puntos',
         // translate: 'MENU.APPS.EMAIL',
         type: 'collapsible',
         icon: 'dollar-sign',
@@ -123,7 +123,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           }
         ]
       },
@@ -140,7 +140,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           }
         ]
       },
@@ -157,7 +157,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           }
         ]
       },
@@ -165,7 +165,7 @@ export const menu: CoreMenu[] = [
   },
   {
     id: 'superMonedas',
-    title: 'Super Monedas',
+    title: 'Big Puntos',
     // role: [Role.BigPuntos],
     // translate: 'MENU.PAGES.SECTION',
     type: 'collapsible',
@@ -173,19 +173,19 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: 'obtenerCobroConSuperMonedas',
-        title: '**Cobrar con Super Monedas',
+        title: '**Cobrar con Big Puntos',
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'users',
-        url: '/supermonedas/inicio'
+        url: '/bigpuntos/inicio'
       },
       {
         id: 'cobrarConSuperMonedas',
-        title: 'Cobrar con Super Monedas',
+        title: 'Cobrar con Big Puntos',
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'users',
-        url: '/supermonedas/cobrar'
+        url: '/bigpuntos/cobrar'
       },
       {
         id: 'reporteCobrosBP',
@@ -193,7 +193,7 @@ export const menu: CoreMenu[] = [
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'users',
-        url: '/supermonedas/reporteCobros'
+        url: '/bigpuntos/reporteCobros'
       },
       {
         id: 'clientes',
@@ -201,7 +201,7 @@ export const menu: CoreMenu[] = [
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'users',
-        url: 'personas/supermonedas/mis-monedas'
+        url: 'personas/bigpuntos/mis-monedas'
       },
       {
         id: 'productos',
@@ -209,7 +209,7 @@ export const menu: CoreMenu[] = [
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'shopping-bag',
-        url: 'personas/supermonedas/mis-monedas'
+        url: 'personas/bigpuntos/mis-monedas'
       },
       {
         id: 'cargarMonedas',
@@ -217,7 +217,7 @@ export const menu: CoreMenu[] = [
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'dollar-sign',
-        url: 'personas/supermonedas/mis-monedas'
+        url: 'personas/bigpuntos/mis-monedas'
       },
       {
         id: 'cargarPremios',
@@ -225,7 +225,7 @@ export const menu: CoreMenu[] = [
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'package',
-        url: 'personas/supermonedas/mis-monedas'
+        url: 'personas/bigpuntos/mis-monedas'
       }, {
         id: 'mdoMotorOfertas',
         title: 'MDO Motor de Ofertas',
@@ -239,7 +239,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'prediccionesCrosseling',
@@ -247,7 +247,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'prediccionesRefil',
@@ -255,7 +255,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'prediccionesNuevosProductos',
@@ -263,7 +263,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           },
           {
             id: 'generarOfertaCliente',
@@ -271,7 +271,7 @@ export const menu: CoreMenu[] = [
             // translate: 'MENU.APPS.EMAIL',
             type: 'item',
             icon: 'circle',
-            url: 'personas/supermonedas/mis-monedas'
+            url: 'personas/bigpuntos/mis-monedas'
           }]
       }
     ]
@@ -305,7 +305,7 @@ export const menu: CoreMenu[] = [
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'credit-card',
-        url: 'personas/supermonedas/mis-monedas'
+        url: 'personas/bigpuntos/mis-monedas'
       },
     ]
   },
@@ -316,7 +316,7 @@ export const menu: CoreMenu[] = [
     // role: [Role.BigPuntos],
     type: 'item',
     icon: 'dollar-sign',
-    url: 'personas/supermonedas/mis-monedas',
+    url: 'personas/bigpuntos/mis-monedas',
 
   },
   {
@@ -326,7 +326,7 @@ export const menu: CoreMenu[] = [
     // role: [Role.BigPuntos],
     type: 'item',
     icon: 'dollar-sign',
-    url: 'personas/supermonedas/mis-monedas',
+    url: 'personas/bigpuntos/mis-monedas',
   },
   {
     id: 'creditosPreapobados',

@@ -299,7 +299,7 @@ export class CreditosPreaprobadosComponent implements OnInit {
       "Fecha cobro",
       "Monto factura",
       "Numero factura",
-      "Monto cobrado con Supermonedas",
+      "Monto cobrado con Bigpuntos",
       "Nombre cliente",
       "Cédula",
       "WhatsApp",
@@ -319,7 +319,7 @@ export class CreditosPreaprobadosComponent implements OnInit {
       });
     }
     const reportData = {
-      title: "Reporte de Cobros con Supermonedas",
+      title: "Reporte de Cobros con Bigpuntos",
       data: this.infoExportar,
       headers,
     };
