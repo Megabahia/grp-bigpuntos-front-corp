@@ -16,6 +16,13 @@ import { CardSnippetModule } from '../../../@core/components/card-snippet/card-s
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { NotasPedidoComponent } from './vistas/notas-pedido/notas-pedido.component';
+import { ConsultaCreditosAprobadosComponent } from './vistas/consulta-creditos-aprobados/consulta-creditos-aprobados.component';
+import { FacturacionComponent } from './vistas/facturacion/facturacion.component';
+import { DocumentosHabilitantesComponent } from './vistas/documentos-habilitantes/documentos-habilitantes.component';
+import { EnvioDocumentosComponent } from './vistas/envio-documentos/envio-documentos.component';
+import { GuiaRemisionComponent } from './vistas/guia-remision/guia-remision.component';
+import { SaldoContableComponent } from './vistas/saldo-contable/saldo-contable.component';
+import { SaldoDisponibleComponent } from './vistas/saldo-disponible/saldo-disponible.component';
 
 const routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -40,16 +47,70 @@ const routes = [
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
-
-
-
+  {
+    path: 'consulta-creditos-aprobados',
+    component: ConsultaCreditosAprobadosComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
+  {
+    path: 'facturacion',
+    component: FacturacionComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
+  {
+    path: 'documentos-habilitantes',
+    component: DocumentosHabilitantesComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
+  {
+    path: 'envio-doocumentos',
+    component: EnvioDocumentosComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
+  {
+    path: 'guia-remision',
+    component: GuiaRemisionComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  }
+  ,
+  {
+    path: 'saldo-contable',
+    component: SaldoContableComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
+  {
+    path: 'saldo-disponible',
+    component: SaldoDisponibleComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  }
 ];
 
 @NgModule({
   declarations: [
     PrincipalComponent,
     SolicitudesComponent,
-    NotasPedidoComponent
+    NotasPedidoComponent,
+    ConsultaCreditosAprobadosComponent,
+    FacturacionComponent,
+    DocumentosHabilitantesComponent,
+    EnvioDocumentosComponent,
+    GuiaRemisionComponent,
+    SaldoContableComponent,
+    SaldoDisponibleComponent
   ],
   imports: [
     CoreCommonModule,

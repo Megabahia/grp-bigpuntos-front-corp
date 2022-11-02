@@ -283,30 +283,86 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'shopping-bag',
     children: [
+      // {
+      //   id: 'notasPedido',
+      //   title: 'Notas de pedido',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   icon: 'dollar-sign',
+      //   url: 'comercial/notas-pedido'
+      // },
       {
-        id: 'notasPedido',
-        title: 'Notas de pedido',
+        id: 'consulta-creditos-aprobados',
+        title: 'Consulta de creditos aprobados',
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
-        icon: 'dollar-sign',
-        url: 'comercial/notas-pedido'
+        // icon: 'dollar-sign',
+        url: 'comercial/consulta-creditos-aprobados'
       },
       {
-        id: 'solicitudesCredito',
-        title: 'Solicitudes de crédito',
+        id: 'facturacion',
+        title: 'Facturacion',
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
-        icon: 'dollar-sign',
-        url: '/comercial/solicitudes-de-credito'
+        // icon: 'dollar-sign',
+        url: 'comercial/facturacion'
       },
       {
-        id: 'creditosPreAprobados',
-        title: 'Créditos pre aprobados',
+        id: 'documentos-habilitantes',
+        title: 'Documentos habilitantes',
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
-        icon: 'credit-card',
-        url: 'personas/bigpuntos/mis-monedas'
+        // icon: 'dollar-sign',
+        url: 'comercial/documentos-habilitantes'
       },
+      {
+        id: 'envio-doocumentos',
+        title: 'Envió de documentos',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        // icon: 'dollar-sign',
+        url: 'comercial/envio-doocumentos'
+      },
+      {
+        id: 'guia-remision',
+        title: 'Guía de remisión',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        // icon: 'dollar-sign',
+        url: 'comercial/guia-remision'
+      },
+      {
+        id: 'saldo-contable',
+        title: 'Saldo contable',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        // icon: 'dollar-sign',
+        url: 'comercial/saldo-contable'
+      },
+      {
+        id: 'saldo-disponible',
+        title: 'Saldo disponible',
+        // translate: 'MENU.APPS.EMAIL',
+        type: 'item',
+        // icon: 'dollar-sign',
+        url: 'comercial/saldo-disponible'
+      },
+      // {
+      //   id: 'solicitudesCredito',
+      //   title: 'Solicitudes de crédito',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   icon: 'dollar-sign',
+      //   url: '/comercial/solicitudes-de-credito'
+      // },
+      // {
+      //   id: 'creditosPreAprobados',
+      //   title: 'Créditos pre aprobados',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   icon: 'credit-card',
+      //   url: 'personas/bigpuntos/mis-monedas'
+      // },
     ]
   },
   {
