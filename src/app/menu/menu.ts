@@ -291,62 +291,62 @@ export const menu: CoreMenu[] = [
       //   icon: 'dollar-sign',
       //   url: 'comercial/notas-pedido'
       // },
-      {
-        id: 'consulta-creditos-aprobados',
-        title: 'Consulta de creditos aprobados',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        // icon: 'dollar-sign',
-        url: 'comercial/consulta-creditos-aprobados'
-      },
-      {
-        id: 'facturacion',
-        title: 'Facturacion',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        // icon: 'dollar-sign',
-        url: 'comercial/facturacion'
-      },
-      {
-        id: 'documentos-habilitantes',
-        title: 'Documentos habilitantes',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        // icon: 'dollar-sign',
-        url: 'comercial/documentos-habilitantes'
-      },
-      {
-        id: 'envio-doocumentos',
-        title: 'Envió de documentos',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        // icon: 'dollar-sign',
-        url: 'comercial/envio-doocumentos'
-      },
-      {
-        id: 'guia-remision',
-        title: 'Guía de remisión',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        // icon: 'dollar-sign',
-        url: 'comercial/guia-remision'
-      },
-      {
-        id: 'saldo-contable',
-        title: 'Saldo contable',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        // icon: 'dollar-sign',
-        url: 'comercial/saldo-contable'
-      },
-      {
-        id: 'saldo-disponible',
-        title: 'Saldo disponible',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        // icon: 'dollar-sign',
-        url: 'comercial/saldo-disponible'
-      },
+      // {
+      //   id: 'consulta-creditos-aprobados',
+      //   title: 'Consulta de creditos aprobados',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/consulta-creditos-aprobados'
+      // },
+      // {
+      //   id: 'facturacion',
+      //   title: 'Facturacion',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/facturacion'
+      // },
+      // {
+      //   id: 'documentos-habilitantes',
+      //   title: 'Documentos habilitantes',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/documentos-habilitantes'
+      // },
+      // {
+      //   id: 'envio-doocumentos',
+      //   title: 'Envió de documentos',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/envio-doocumentos'
+      // },
+      // {
+      //   id: 'guia-remision',
+      //   title: 'Guía de remisión',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/guia-remision'
+      // },
+      // {
+      //   id: 'saldo-contable',
+      //   title: 'Saldo contable',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/saldo-contable'
+      // },
+      // {
+      //   id: 'saldo-disponible',
+      //   title: 'Saldo disponible',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/saldo-disponible'
+      // },
       // {
       //   id: 'solicitudesCredito',
       //   title: 'Solicitudes de crédito',
