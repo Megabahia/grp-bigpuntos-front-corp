@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {DocumentosHabilitantesService} from './documentos-habilitantes.service';
 
 @Component({
     selector: 'app-documentos-habilitantes',
@@ -7,6 +8,9 @@ import {Router} from '@angular/router';
     styleUrls: ['./documentos-habilitantes.component.scss']
 })
 export class DocumentosHabilitantesComponent implements OnInit {
+
+    public idCredito;
+    public credito;
 
     public documentos = [
         {'label': 'Identificacion', 'valor': false},
@@ -29,10 +33,20 @@ export class DocumentosHabilitantesComponent implements OnInit {
 
     constructor(
         private _router: Router,
+        private route: ActivatedRoute,
+        private _consultaCreditosService: DocumentosHabilitantesService,
     ) {
     }
 
     ngOnInit(): void {
+
+        this.route.params.subscribe((params: Params) => this.idCredito = params['id']);
+        this._consultaCreditosService.obtenerCredito(this.idCredito).subscribe((info) => {
+            console.log('info', info);
+            this.credito = info;
+
+        });
+
     }
 
     continuar() {

@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SaldoDisponibleComponent implements OnInit {
 
+  public page_size: any = 10;
+  public collectionSize;
+  public page = 1;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -332,6 +332,14 @@ export const menu: CoreMenu[] = [
       //   url: 'comercial/guia-remision'
       // },
       // {
+      //   id: 'envios-realizados',
+      //   title: 'Envíos realizados',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   // icon: 'dollar-sign',
+      //   url: 'comercial/envios-realizados'
+      // },
+      // {
       //   id: 'saldo-contable',
       //   title: 'Saldo contable',
       //   // translate: 'MENU.APPS.EMAIL',

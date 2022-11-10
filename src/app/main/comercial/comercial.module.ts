@@ -23,6 +23,7 @@ import { EnvioDocumentosComponent } from './vistas/envio-documentos/envio-docume
 import { GuiaRemisionComponent } from './vistas/guia-remision/guia-remision.component';
 import { SaldoContableComponent } from './vistas/saldo-contable/saldo-contable.component';
 import { SaldoDisponibleComponent } from './vistas/saldo-disponible/saldo-disponible.component';
+import { EnviosRealizadosComponent } from './vistas/envios-realizados/envios-realizados.component';
 
 const routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -55,14 +56,14 @@ const routes = [
     // data: { animation: 'auth' }
   },
   {
-    path: 'facturacion',
+    path: 'facturacion/:id',
     component: FacturacionComponent ,
     // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
   {
-    path: 'documentos-habilitantes',
+    path: 'documentos-habilitantes/:identificacion',
     component: DocumentosHabilitantesComponent ,
     // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
@@ -78,6 +79,14 @@ const routes = [
   {
     path: 'guia-remision',
     component: GuiaRemisionComponent ,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  }
+  ,
+  {
+    path: 'envios-realizados',
+    component: EnviosRealizadosComponent ,
     // data: { roles: [Role.BigPuntos] },
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
@@ -110,7 +119,8 @@ const routes = [
     EnvioDocumentosComponent,
     GuiaRemisionComponent,
     SaldoContableComponent,
-    SaldoDisponibleComponent
+    SaldoDisponibleComponent,
+    EnviosRealizadosComponent
   ],
   imports: [
     CoreCommonModule,

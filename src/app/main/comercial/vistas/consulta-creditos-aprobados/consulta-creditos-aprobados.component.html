@@ -44,9 +44,13 @@
             </div>
 
             <div class="mt-2 text-center">
-                <button class="btn btn-primary mr-1" (click)="continuar()"
+                <button class="btn btn-primary mr-1" (click)="continuar(modalSLC)"
                 >
                     Continuar
+                </button>
+                <button class="btn btn-primary mr-1" (click)="generar(modalSLC)"
+                >
+                    Generar
                 </button>
 
             </div>
@@ -69,11 +73,11 @@
                     <input type="text"
                            class="form-control"
                            formControlName="nombre"
-                    >
 
+                    >
                     <div *ngIf="submittedCA && creditoAprobadoControlsForm.nombre.errors" class="invalid-feedback"
                          style="display: block;">
-                        <div *ngIf="creditoAprobadoControlsForm.nombre.errors.required">Cédula es requerido
+                        <div *ngIf="creditoAprobadoControlsForm.nombre.errors.required">Nombres es requerido
                         </div>
                     </div>
                 </div>
@@ -87,10 +91,11 @@
                     <input type="text"
                            class="form-control"
                            formControlName="apellido"
+
                     >
                     <div *ngIf="submittedCA && creditoAprobadoControlsForm.apellido.errors" class="invalid-feedback"
                          style="display: block;">
-                        <div *ngIf="creditoAprobadoControlsForm.apellido.errors.required"> Apellido es requerido</div>
+                        <div *ngIf="creditoAprobadoControlsForm.apellido.errors.required"> Apellidos es requerido</div>
                     </div>
                 </div>
             </div>
@@ -103,6 +108,7 @@
                     <input type="text"
                            class="form-control"
                            formControlName="identificacion"
+
                     >
                     <div *ngIf="submittedCA && creditoAprobadoControlsForm.identificacion.errors"
                          class="invalid-feedback"
@@ -199,5 +205,26 @@
     </form>
 </div>
 
+
+<ng-template #modalSLC let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel1">Aviso:</h4>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div style="padding: 20px 20px 20px 20px;">
+        <div class="content-header text-center">
+            <h5 class="mb-0">{{mensaje}}</h5>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
+            Cerrar
+        </button>
+    </div>
+</ng-template>
 
 
