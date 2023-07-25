@@ -20,6 +20,10 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { CobrarComponent } from './vistas/cobrar/cobrar.component';
 import {NgxPrintModule} from 'ngx-print';
 import { ReporteCobrosComponent } from './vistas/reporte-cobros/reporte-cobros.component';
+import { ListarComponent as CargarMonedas } from './vistas/cargarSuperMonedas/listar/listar.component'
+
+
+
 const routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
@@ -43,9 +47,13 @@ const routes = [
     canActivate: [AuthGuard]
     // data: { animation: 'auth' }
   },
-
-
-
+  {
+    path: 'mis-monedas',
+    component: CargarMonedas,
+    // data: { roles: [Role.BigPuntos] },
+    canActivate: [AuthGuard]
+    // data: { animation: 'auth' }
+  },
 ];
 
 @NgModule({
@@ -53,7 +61,8 @@ const routes = [
     PrincipalComponent,
     CobrarComponent,
     PerfilUsuarioComponent,
-    ReporteCobrosComponent
+    ReporteCobrosComponent,
+    CargarMonedas,
   ],
   imports: [
     CoreCommonModule,

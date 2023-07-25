@@ -171,14 +171,14 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'dollar-sign',
     children: [
-      {
-        id: 'obtenerCobroConSuperMonedas',
-        title: '**Cobrar con Big Puntos',
-        // translate: 'MENU.APPS.EMAIL',
-        type: 'item',
-        icon: 'users',
-        url: '/bigpuntos/inicio'
-      },
+      // {
+      //   id: 'obtenerCobroConSuperMonedas',
+      //   title: '**Cobrar con Big Puntos',
+      //   // translate: 'MENU.APPS.EMAIL',
+      //   type: 'item',
+      //   icon: 'users',
+      //   url: '/bigpuntos/inicio'
+      // },
       {
         id: 'cobrarConSuperMonedas',
         title: 'Cobrar con Big Puntos',
@@ -213,11 +213,11 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'cargarMonedas',
-        title: 'Cargar Monedas',
+        title: 'Cargar Big Puntos',
         // translate: 'MENU.APPS.EMAIL',
         type: 'item',
         icon: 'dollar-sign',
-        url: 'personas/bigpuntos/mis-monedas'
+        url: 'bigpuntos/mis-monedas'
       },
       {
         id: 'cargarPremios',
