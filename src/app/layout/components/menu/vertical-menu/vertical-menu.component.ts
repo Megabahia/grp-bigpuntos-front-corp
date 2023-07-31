@@ -20,7 +20,7 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
   menu: any;
   isCollapsed: boolean;
   isScrolled: boolean = false;
-
+  public usuario;
   // Private
   private _unsubscribeAll: Subject<any>;
 
@@ -51,6 +51,8 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
    * On Init
    */
   ngOnInit(): void {
+    this.usuario = this._coreMenuService.grpCorpUser;
+
     // Subscribe config change
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
