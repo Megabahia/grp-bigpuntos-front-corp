@@ -21,11 +21,18 @@
                                                 <input type="text" class="form-control form-control-sm" id="codigoCobro" name="codigoCobro" placeholder="Código de Cobro" [(ngModel)]="codigoCobro">
                                             </div>
                                         </div>
-
                                         <div class="col-md-2">
                                             <a class="btn btn-primary" (click)="obtenerCobro()">
                                                 <i data-feather='search'></i>
                                             </a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Código del referido:</label>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-sm" id="codigoReferido" name="codigoReferido" placeholder="Código del referido" [(ngModel)]="codigoReferido">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -234,9 +241,9 @@
                     <div class="col-md-3">
                     </div>
                     <div class="col-md-6">
-                        <a class="btn btn-primary" (click)="confirmarCobro()">
+                        <button class="btn btn-primary" (click)="confirmarCobro()" [disabled]="bloquear">
                             Confirmar Cobro
-                        </a>
+                        </button>
                     </div>
                     <div class="col-md-3">
                     </div>
@@ -252,7 +259,7 @@
 <div id="print-section">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">Confirmación de Cobro</h5>
-        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <button type="button" class="close" (click)="nuevoCobro()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>

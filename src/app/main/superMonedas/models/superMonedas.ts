@@ -26,4 +26,5 @@ export class GenerarCobro {
     apellidos: string;
     identificacion: string;
     whatsapp: string;
+    codigoReferido: string;
 }
