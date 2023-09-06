@@ -49,7 +49,17 @@
                         <div class="col-md-8 col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="row">
+                                    <div class="row" *ngIf="nuevoCliente">
+                                        <div class="col-md-5">
+                                            <label>Nuevo cliente:</label>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-sm" id="nuevoCliente" name="identificacion" placeholder="Nuevo cliente" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="!nuevoCliente">
                                         <div class="col-md-5">
                                             <label>Número de identificación del cliente:</label>
                                         </div>
@@ -59,7 +69,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" *ngIf="!nuevoCliente">
                                         <div class="col-md-5">
                                             <label>Nombres del Cliente:</label>
                                         </div>
@@ -69,7 +79,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" *ngIf="!nuevoCliente">
                                         <div class="col-md-5">
                                             <label>Apellidos del Cliente:</label>
                                         </div>
