@@ -46,6 +46,7 @@ export class CobrarComponent implements OnInit {
     public cobrar: boolean = true;
     public montoSupermonedas;
     public bloquear = false;
+    public nuevoCliente = false;
 
     constructor(
         private _cobrarService: CobrarService,
@@ -110,9 +111,15 @@ export class CobrarComponent implements OnInit {
     }
 
     obtenerCobro() {
+        if (this.codigoCobro === '' && this.codigoReferido === '') {
+            this.mensaje = 'Ingrese valores de busqueda.';
+            this.abrirModal(this.mensajeModal);
+            return;
+        }
         this.cobrar = true;
-        console.log(this.usuario.empresa);
-        this._cobrarService.obtenerCobro({codigoCobro: this.codigoCobro, empresa_id: this.usuario.empresa._id}).subscribe(
+        this._cobrarService.obtenerCobro({
+            codigoCobro: this.codigoCobro, codigoReferido: this.codigoReferido, empresa_id: this.usuario.empresa._id
+        }).subscribe(
             (info) => {
                 if (info.error) {
                     if (info.error.message) {
@@ -134,6 +141,7 @@ export class CobrarComponent implements OnInit {
                     this.generarCobro.whatsapp = info.whatsapp;
                     this.generarCobro.identificacion = info.identificacion;
                     this.montoSupermonedas = info.monto;
+                    this.nuevoCliente = !info.identificacion;
                     this.cobrar = false;
                 }
             }, (error) => {
@@ -201,6 +209,7 @@ export class CobrarComponent implements OnInit {
         this.codigoCobro = '';
         this.cobroConCodigo = this.inicializarCobroConCodigo();
         this.generarCobro = this.inicializarGenerarCobro();
+        this.nuevoCliente = false;
         this.cerrarModal();
     }
 
@@ -213,6 +222,7 @@ export class CobrarComponent implements OnInit {
                 this.abrirModal(this.confirmacionCobroMdl);
             },
             (error) => {
+                this.bloquear = false;
                 this.mensaje = 'Error en guardar cobro, revise su crédito';
                 this.abrirModal(this.mensajeModal);
             });
