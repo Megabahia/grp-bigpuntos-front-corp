@@ -1,5 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 
+/**
+ * Bigpuntos
+ * Corp
+ * ESta pantalla sirve para mostrar el saldo contable
+ * Rutas:
+ * No tiene llamado de rutas
+ */
+
 @Component({
     selector: 'app-saldo-contable',
     templateUrl: './saldo-contable.component.html',

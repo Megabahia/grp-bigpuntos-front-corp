@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {CoreMenuService} from '@core/components/core-menu/core-menu.service';
 import {NgbModal, NgbPagination} from '@ng-bootstrap/ng-bootstrap';
 import {User} from 'app/auth/models';
@@ -9,6 +9,15 @@ import {CobrarService} from './cobrar.service';
 import {DatePipe} from '@angular/common';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
+/**
+ * Bigpuntos
+ * Corp
+ * Esta pantalla sirve para consultar para realizar el cobro
+ * Rutas:
+ * `${environment.apiUrl}/corp/pagos/list/`,
+ * `${environment.apiUrl}/corp/movimientoCobros/create/`,
+ */
+
 @Component({
     selector: 'app-cobrar',
     templateUrl: './cobrar.component.html',
@@ -17,7 +26,7 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
     host: {class: 'ecommerce-application'},
     providers: [DatePipe]
 })
-export class CobrarComponent implements OnInit {
+export class CobrarComponent implements OnInit, OnDestroy {
     @ViewChild('preautorizacionCobroMdl') preautorizacionCobroMdl;
     @ViewChild('confirmacionCobroMdl') confirmacionCobroMdl;
     @ViewChild('mensajeModal') mensajeModal;
@@ -95,8 +104,7 @@ export class CobrarComponent implements OnInit {
     }
 
     transformarFecha(fecha) {
-        let nuevaFecha = this.datePipe.transform(fecha, 'yyyy-MM-dd');
-        return nuevaFecha;
+        return this.datePipe.transform(fecha, 'yyyy-MM-dd');
     }
 
     get cobForm() {

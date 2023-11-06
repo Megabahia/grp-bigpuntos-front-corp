@@ -3,6 +3,14 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {GuiaRemisionService} from './guia-remision.service';
 
+/**
+ * Bigpuntos
+ * Corp
+ * ESta pantalla sirve para mostrar la guia de remision del envio de documentos
+ * Rutas:
+ * `${environment.apiUrl}/corp/envios/create/`,
+ */
+
 @Component({
     selector: 'app-guia-remision',
     templateUrl: './guia-remision.component.html',

@@ -4,6 +4,14 @@ import {CoreMenuService} from '../../../../../@core/components/core-menu/core-me
 import {DatePipe} from '@angular/common';
 import {ExportService} from '../../../../services/export.service';
 
+/**
+ * Bigpuntos
+ * Corp
+ * ESta pantalla sirve para generar el reporte de cobros
+ * Rutas:
+ * `${environment.apiUrl}/corp/movimientoCobros/reporte/empresas/`,
+ */
+
 @Component({
     selector: 'app-reporte-cobros',
     templateUrl: './reporte-cobros.component.html',

@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * Bigpuntos
+ * Corp
+ * Esta pantalla sirve para mostrar el saldo disponible
+ * Rutas:
+ * No tiene llamado de rutas
+ */
+
 @Component({
   selector: 'app-saldo-disponible',
   templateUrl: './saldo-disponible.component.html',

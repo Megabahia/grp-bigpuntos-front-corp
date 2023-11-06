@@ -4,6 +4,17 @@ import { CompartirPublicacionesService } from './compartir-publicaciones.service
 import { DatePipe } from '@angular/common';
 import { CoreMenuService } from '../../../../../../@core/components/core-menu/core-menu.service';
 
+/**
+ * Bigpuntos
+ * corp
+ * Esta pantalla sirve para mostrar las publicaciones
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/listOne`,
+ * `${environment.apiUrl}/corp/empresas/listOne/filtros/`,
+ * `${environment.apiUrl}/central/publicaciones/list/`,
+ * `${environment.apiUrl}/central/publicaciones/compartir/`,
+ */
+
 @Component({
   selector: 'app-compartir-publicaciones',
   templateUrl: './compartir-publicaciones.component.html',

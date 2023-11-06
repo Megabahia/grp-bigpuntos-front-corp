@@ -9,6 +9,19 @@ import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { BienvenidoService } from './bienvenido.service';
 import { CoreMenuService } from '../../../../../@core/components/core-menu/core-menu.service';
 
+/**
+ * Bigpuntos
+ * corp
+ * Esta pantalla sirve para mostrar informacion de inicio al ingresar al portal de personas
+ * Rutas:
+ * `${environment.apiUrl}/core/monedas/create/`
+ * `${environment.apiUrl}/central/usuarios/update/${datos.id}`,
+ * `${environment.apiUrl}/central/productos/list/`,
+ * `${environment.apiUrl}/central/param/list/listOne`,
+ * `${environment.apiUrl}/corp/empresas/listOne/filtros/`,
+ * `${environment.apiUrl}/central/productos/listOne/${id}`,
+ */
+
 @Component({
   selector: 'app-bienvenido',
   templateUrl: './bienvenido.component.html',

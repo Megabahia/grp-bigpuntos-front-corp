@@ -5,6 +5,14 @@ import {FacturacionService} from '../facturacion/facturacion.service';
 import {EnvioDocumentosService} from './envio-documentos.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
+/**
+ * Bigpuntos
+ * Corp
+ * ESta pantalla sirve para subir los archivos de los documentos habilitantes
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoArchivos/subir/documentosFirmados`,
+ */
+
 @Component({
     selector: 'app-envio-documentos',
     templateUrl: './envio-documentos.component.html',

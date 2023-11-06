@@ -1,6 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {EnviosRealizadosService} from './envios-realizados.service';
 
+/**
+ * Bigpuntos
+ * Corp
+ * ESta pantalla sirve para generar el envio de los documentos mediante un courier
+ * Rutas:
+ * `${environment.apiUrl}/corp/envios/list/`,
+ */
+
 @Component({
     selector: 'app-envios-realizados',
     templateUrl: './envios-realizados.component.html',

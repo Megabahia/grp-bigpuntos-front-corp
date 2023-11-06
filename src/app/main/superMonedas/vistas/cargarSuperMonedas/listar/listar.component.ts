@@ -11,6 +11,18 @@ import {MisFacturasService} from '../../../../personas/vistas/supermonedas/mis-f
 import {ParametrizacionesService} from '../../../../center/parametrizaciones.service';
 import {BienvenidoService} from '../../../../personas/vistas/bienvenido/bienvenido.service';
 
+/**
+ * Bigpuntos
+ * Corp
+ * ESta pantalla sirve para cargar monedas de bigpuntos
+ * Rutas:
+ * `${environment.apiUrl}/core/monedas/list/monedas/empresas`,
+ * `${environment.apiUrl}/corp/empresas/listOne/filtros/`,
+ * `${environment.apiUrl}/central/param/list/tipo/todos/`,
+ * `${environment.apiUrl}/central/facturas/list/`,
+ * `${environment.apiUrl}/core/monedas/upload/monedas`,
+ */
+
 @Component({
     selector: 'app-listar',
     templateUrl: './listar.component.html',

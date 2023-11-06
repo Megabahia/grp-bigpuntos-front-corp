@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ReporteCobrosService {
 
-  constructor(private _httpClient: HttpClient) { }
+    constructor(private _httpClient: HttpClient) {
+    }
 
-  obtenerListaPagos(datos) {
-    return this._httpClient.post<any>(`${environment.apiUrl}/corp/movimientoCobros/reporte/empresas/`, datos);
-  }
+    obtenerListaPagos(datos) {
+        return this._httpClient.post<any>(`${environment.apiUrl}/corp/movimientoCobros/reporte/empresas/`, datos);
+    }
 }

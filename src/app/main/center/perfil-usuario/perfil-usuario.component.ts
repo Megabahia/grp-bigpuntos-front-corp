@@ -9,6 +9,21 @@ import { DatePipe } from '@angular/common';
 import moment from 'moment';
 import { FlatpickrOptions } from 'ng2-flatpickr';
 
+/*
+* Bigpuntos
+* PErsonas
+* Esta pantalla sirve para registar el perfil del usuario
+* Rutas:
+* `${environment.apiUrl}/personas/personas/listOne/${id}`
+* `${environment.apiUrl}/personas/historialLaboral/listOne/${user_id}`
+* `${environment.apiUrl}/central/usuarios/update/${datos.id}`
+* `${environment.apiUrl}/personas/personas/update/${datos.user_id}`
+* `${environment.apiUrl}/personas/personas/update/imagen/${id}`
+* `${environment.apiUrl}/central/param/list/tipo/todos/`,
+* `${environment.apiUrl}/central/param/list/filtro/nombre`,
+* `${environment.apiUrl}/personas/historialLaboral/update/${user_id}`
+* */
+
 @Component({
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',

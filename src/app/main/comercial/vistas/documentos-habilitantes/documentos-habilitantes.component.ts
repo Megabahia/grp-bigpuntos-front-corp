@@ -2,6 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DocumentosHabilitantesService} from './documentos-habilitantes.service';
 
+/**
+ * Bigpuntos
+ * Corp
+ * Esta pantalla sirve para mostrar los documentos habilitantes
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/listOne/${id}`
+ */
+
 @Component({
     selector: 'app-documentos-habilitantes',
     templateUrl: './documentos-habilitantes.component.html',

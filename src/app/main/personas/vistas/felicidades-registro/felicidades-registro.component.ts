@@ -7,6 +7,16 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BienvenidoService } from '../bienvenido/bienvenido.service';
 
+/**
+ * Bigpuntos
+ * corp
+ * ESta pantalla sirve para felicitar al usuario por completar el perfil
+ * Rutas:
+ * `${environment.apiUrl}/central/param/list/listOne`,
+ * `${environment.apiUrl}/corp/empresas/listOne/filtros/`,
+ * `${environment.apiUrl}/central/usuarios/update/${datos.id}`,
+ */
+
 @Component({
   selector: 'app-felicidades-registro',
   templateUrl: './felicidades-registro.component.html',

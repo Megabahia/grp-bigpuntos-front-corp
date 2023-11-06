@@ -4,6 +4,15 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FacturacionService} from './facturacion.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
+/**
+ * Bigpuntos
+ * Corp
+ * ESta pantalla sirve para cargar la factura del cliente con sus datos
+ * Rutas:
+ * `${environment.apiUrl}/corp/creditoPersonas/listOne/${id}`
+ * `${environment.apiUrl}/corp/notasPedidos/create/factura/`,
+ */
+
 @Component({
     selector: 'app-facturacion',
     templateUrl: './facturacion.component.html',
